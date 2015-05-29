@@ -2,6 +2,7 @@
 
 
 ###Getting started
-1. Clone the project: ```git clone https://github.com/sefvef/ptq-js.git```
-2. Include
+1. Install via Bower: ```bower install ptq-js --save```
+2. Include the script file in your project HTML ```<script src="bower_components/ptq-js/ptq.min.js"></script>```
+3. That's it!
 
