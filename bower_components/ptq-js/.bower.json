@@ -1,15 +1,11 @@
 {
   "name": "ptq-js",
-  "version": "0.0.0",
   "homepage": "https://github.com/sefvef/ptq-js",
   "authors": [
     "Alessio Scalici <alessio.scalici@gmail.com>"
   ],
   "description": "The Javascript library for PTQ parsers",
-  "main": [
-    "build/ptq.min.js",
-    "build/ptq.js"
-  ],
+  "main": "build/ptq.min.js",
   "keywords": [
     "ptq",
     "parser",
@@ -26,5 +22,15 @@
     "report",
     "src",
     "*.*"
-  ]
+  ],
+  "_release": "1da837ad39",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "1da837ad39e9a00435ad5684bf13503477ae7518"
+  },
+  "_source": "git://github.com/sefvef/ptq-js.git",
+  "_target": "*",
+  "_originalSource": "ptq-js",
+  "_direct": true
 }
