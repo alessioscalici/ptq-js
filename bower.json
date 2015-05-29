@@ -1,0 +1,26 @@
+{
+  "name": "ptq-js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sefvef/ptq-js",
+  "authors": [
+    "Alessio Scalici <alessio.scalici@gmail.com>"
+  ],
+  "description": "The Javascript library for PTQ parsers",
+  "main": "build/ptq.min.js",
+  "keywords": [
+    "ptq",
+    "parser",
+    "lexer",
+    "scanner"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "karma",
+    "test",
+    "report",
+    "src",
+    "*.*"
+  ]
+}
