@@ -25,6 +25,6 @@
     "*.html",
     "*.md",
     ".*",
-    "gulpfile.js",
+    "gulpfile.js"
   ]
 }
