@@ -56,7 +56,7 @@ gulp.task('docs', function(){
 });
 
 
-gulp.task('build', ['jshint'], function(){
+gulp.task('build-prod', ['jshint'], function(){
 
     var srcFiles = [
         'src/_start.js',
@@ -64,15 +64,28 @@ gulp.task('build', ['jshint'], function(){
         'src/_end.js'
     ];
 
-    // Be sure to return the stream
     return gulp.src(srcFiles)
         .pipe(concat('ptq.min.js'))
         .pipe(uglify({
             mangle : true
         }))
-        .pipe(gulp.dest('build'));
-
+        .pipe(gulp.dest('.'));
 });
+
+gulp.task('build-concat', ['jshint'], function(){
+    var srcFiles = [
+        'src/_start.js',
+        'src/!(_*).js',
+        'src/_end.js'
+    ];
+
+    return gulp.src(srcFiles)
+        .pipe(concat('ptq.js'))
+        .pipe(gulp.dest('.'));
+});
+
+
+gulp.task('build', ['build-concat', 'build-prod']);
 
 
 gulp.task('dev', ['jshint'], function(){
