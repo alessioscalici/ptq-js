@@ -17,6 +17,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
+    "bower_components",
     "karma",
     "test",
     "report",
