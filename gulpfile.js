@@ -69,7 +69,7 @@ gulp.task('build-prod', ['jshint'], function(){
         .pipe(uglify({
             mangle : true
         }))
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('build'));
 });
 
 gulp.task('build-concat', ['jshint'], function(){
@@ -81,7 +81,7 @@ gulp.task('build-concat', ['jshint'], function(){
 
     return gulp.src(srcFiles)
         .pipe(concat('ptq.js'))
-        .pipe(gulp.dest('.'));
+        .pipe(gulp.dest('build'));
 });
 
 

@@ -6,7 +6,7 @@
     "Alessio Scalici <alessio.scalici@gmail.com>"
   ],
   "description": "The Javascript library for PTQ parsers",
-  "main": "ptq.min.js",
+  "main": "build/ptq.min.js",
   "keywords": [
     "ptq",
     "parser",
@@ -22,10 +22,6 @@
     "test",
     "report",
     "src",
-    "*.json",
-    "*.html",
-    "*.md",
-    ".*",
-    "gulpfile.js"
+    "*.*"
   ]
 }
