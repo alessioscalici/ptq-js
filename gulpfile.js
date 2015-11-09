@@ -4,6 +4,7 @@ var gulp = require('gulp')
     uglify = require('gulp-uglify'),
     jsdoc = require('gulp-jsdoc'),
     jshint = require('gulp-jshint'),
+    plato = require('plato'),
     del = require('del');
 
 
@@ -115,4 +116,25 @@ gulp.task('jshint', function() {
         .pipe(jshint())
         .pipe(jshint.reporter('cool-reporter'))
         .pipe(jshint.reporter('fail'));
+});
+
+gulp.task('plato', function() {
+
+    var testFiles = [
+        'src/!(_*).js',
+    ];
+
+    var options = {
+            jshint: {
+                options: {
+                    strict: true
+                }
+            },
+            complexity: {
+                trycatch: true
+            }
+        };
+
+    return plato.inspect(testFiles, './report/complexity', options, function callback(){});
+
 });
