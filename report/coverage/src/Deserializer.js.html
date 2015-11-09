@@ -1,0 +1,2022 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/Deserializer.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/Deserializer.js</span></h1>
+    <h2>
+        Statements: <span class="metric">93.67% <small>(222 / 237)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">73.13% <small>(49 / 67)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(16 / 16)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">93.67% <small>(222 / 237)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; Deserializer.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">55</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2722</span>
+<span class="cline-any cline-yes">2722</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">61553</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">61553</span>
+<span class="cline-any cline-yes">61553</span>
+<span class="cline-any cline-yes">47757</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-yes">30956</span>
+<span class="cline-any cline-yes">30956</span>
+<span class="cline-any cline-yes">13796</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17160</span>
+<span class="cline-any cline-yes">17160</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1612</span>
+<span class="cline-any cline-yes">1612</span>
+<span class="cline-any cline-yes">1612</span>
+<span class="cline-any cline-yes">7897</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1612</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">54</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">51</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">49</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1081</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1081</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1081</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1081</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8774</span>
+<span class="cline-any cline-yes">8774</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8774</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">287960</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">287960</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1081</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">48</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">665</span>
+<span class="cline-any cline-yes">665</span>
+<span class="cline-any cline-yes">665</span>
+<span class="cline-any cline-yes">329</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">665</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">47</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">2021</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">1131</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1131</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">2021</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">2734</span>
+<span class="cline-any cline-yes">2734</span>
+<span class="cline-any cline-yes">2734</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2734</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">2021</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">390</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">390</span>
+<span class="cline-any cline-yes">78</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">312</span>
+<span class="cline-any cline-yes">312</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">390</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">170</span>
+<span class="cline-any cline-yes">170</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-yes">17</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-yes">37</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-yes">129</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-yes">312</span>
+<span class="cline-any cline-yes">312</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">101</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">292</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">130</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">710</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">710</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">710</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">418</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">642</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">6198</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6198</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6180</span>
+<span class="cline-any cline-yes">6180</span>
+<span class="cline-any cline-yes">6180</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">28</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ *
+ * 
+ *  Deserialize a parser / scanner, from an hex-encoded PTQ output
+ *
+ *
+ * 
+ * @param {string} is the hexadecimal serialized Ptq string
+ * @constructor
+ * @author Alessio Scalici
+ */
+var Deserializer = function(is){
+    this.is = new InputStream(is);
+};
+&nbsp;
+&nbsp;
+/**
+ *  Reads the next number in the stream and throws an exception if the number
+ *  does not match the parameter
+ *
+ * 
+ * @param {number} cnst the expected next number in the stream
+ */
+Deserializer.prototype.assertConst = function(cnst){
+    var c = this.readHTF8();
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (c !== cnst) {
+<span class="cstat-no" title="statement not covered" >        throw ("Error reading stream (expected "+cnst+", read "+c+")");</span>
+    }
+};
+&nbsp;
+&nbsp;
+/**
+ * Reads the next positive integer from the stream in HTF8 format. 
+ * HTF8 is a permissive version of UTF8 (also accepts illegal code points), it is used to
+ * better compress the input
+ *
+ * 
+ * @throws {string} 'Deserializer: stream is finished' if the stream is finished
+ * @throws {string} 'Deserializer: unexpected continuation byte' if an unexpected coninuation byte is found
+ * @throws {string} 'Illegal start byte: &lt;HEX&gt;' if an illegal start byte is found
+ */
+Deserializer.prototype.readHTF8 = function(){
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!this.is.hasNext()) {
+<span class="cstat-no" title="statement not covered" >        throw 'Deserializer: stream is finished';</span>
+    }
+&nbsp;
+    var b = this.is.read();
+    if ((b &amp; 0x80) === 0) {
+        return b;
+    }
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ((b &amp; 0x40) === 0) {
+<span class="cstat-no" title="statement not covered" >        throw 'Deserializer: unexpected continuation byte';</span>
+    }
+&nbsp;
+    var res = 0;
+    var mask0 = 0x20;
+    var mask1 = 0x1F;
+    for (var mult = 1; mult &lt; 6; ++mult) {
+        res = (res &lt;&lt; 6) | (this.is.read() &amp; 0x3F);
+        if ((b &amp; mask0) === 0) {
+            return res | ((b &amp; mask1) &lt;&lt; (6*mult));
+        }
+        mask0 &gt;&gt;&gt;= 1;
+        mask1 &gt;&gt;&gt;= 1;
+    }
+<span class="cstat-no" title="statement not covered" >    throw 'Illegal start byte: '+ b.toString(16);</span>
+};
+&nbsp;
+&nbsp;
+&nbsp;
+/**
+ *  Reads the next ASCII string from the stream
+ */
+Deserializer.prototype.readString = function() {
+    var size = this.readHTF8();
+    var res = '';
+    for (var i=0; i&lt;size; ++i) {
+        res += String.fromCharCode(this.is.read());
+    }
+    return res;
+};
+&nbsp;
+/**
+ *  Reads the application stream fixed header (in the beginning of the PTQ stream)
+ *
+ * 
+ * @throws {string} 'Deserializer: Illegal header' if the header isn't correct
+ */
+Deserializer.prototype.readHeader = function() {
+    if (this.is.read() !== 80 || this.is.read() !== 84 || this.is.read() !== 81 || this.is.read() !== 30) {
+        throw 'Deserializer: Illegal header';
+    }
+};
+&nbsp;
+&nbsp;
+&nbsp;
+/**
+ *  Reads the application informations section, and checks if the minimum version the stream requires
+ *  matches the current library version
+ *
+ * 
+ * @throws {string} an exception thrown if the version required from PTQ stream is incorrect
+ */
+Deserializer.prototype.readInfoSection = function () {
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_INFO_SECTION);
+&nbsp;
+&nbsp;
+    this.name = this.readString();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+&nbsp;
+    this.iRequiredMajorVersion = this.readHTF8();
+    this.iRequiredMinorVersion = this.readHTF8();
+    this.iRequiredPatchVersion = this.readHTF8();
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ((this.iRequiredMajorVersion &gt; ptq.MAJOR_VERSION) ||
+        (this.iRequiredMajorVersion === ptq.MAJOR_VERSION &amp;&amp; this.iRequiredMinorVersion &gt; ptq.MINOR_VERSION) ||
+        (this.iRequiredMajorVersion === ptq.MAJOR_VERSION &amp;&amp; this.iRequiredMinorVersion === ptq.MINOR_VERSION &amp;&amp; this.iRequiredPatchVersion &gt; ptq.PATCH_VERSION)
+    ) {
+<span class="cstat-no" title="statement not covered" >        throw 'Version required: ' + this.iRequiredMajorVersion + '.' + this.iRequiredMinorVersion + '.' + this.iRequiredPatchVersion;</span>
+    }
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+};
+&nbsp;
+&nbsp;
+&nbsp;
+// =============================== SCANNER READING ============================== //
+&nbsp;
+&nbsp;
+&nbsp;
+/**
+ *  Reads the entire scanner section
+ *  
+ * @return {Scanner} the deserialized scanner
+ */
+Deserializer.prototype.readScannerSection = function() {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_SCANNER_SECTION);
+&nbsp;
+    this.readCharacterSetSection();
+    this.readTerminalSection();
+    this.readDfaSection();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+&nbsp;
+    var scan = new Scanner(this.dfas, this.dfas[0].name, this.symbols);
+    scan.indentBased = this.containsIndentFlag;
+&nbsp;
+&nbsp;
+    scan.init(this.dfas, this.dfas[0].name, this.symbols);
+    scan.firstIgnoredIndex = this.publicSymbolTableLength;
+    return scan;
+};
+&nbsp;
+&nbsp;
+/**
+ *  Reads the character set section
+ * 
+ */
+Deserializer.prototype.readCharacterSetSection = function() {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_CHARACTER_SET_SECTION);
+&nbsp;
+    var iSetCount = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+    this.characterSets = [];
+&nbsp;
+    for (var i=0; i&lt;iSetCount; ++i) {
+&nbsp;
+        var iRangeCount = this.readHTF8();
+&nbsp;
+        this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+        var curSet = [];
+&nbsp;
+        for (var j=0; j&lt;iRangeCount; ++j)
+        {
+            var iStart = this.readHTF8();
+            var iEnd = this.readHTF8();
+&nbsp;
+            for (var k=iStart; k&lt;=iEnd; ++k)
+            {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (k&lt;0 || k&gt;0x10FFFF || (k&gt;=0xD800 &amp;&amp; k&lt;= 0xDFFF)) {
+<span class="cstat-no" title="statement not covered" >                    throw ("Error reading Character Set section: invalid Unicode code point 0x"+k.toString(16));</span>
+                }
+                curSet.push(k);
+            }
+        }
+        this.characterSets.push(curSet);
+    }
+};
+&nbsp;
+/**
+ *  Reads the terminal table section
+ */
+Deserializer.prototype.readTerminalSection = function() {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_TERMINAL_SECTION);
+&nbsp;
+&nbsp;
+    var iCount = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    this.publicSymbolTableLength = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+&nbsp;
+    this.symbols = [];
+&nbsp;
+    for (var i=0; i&lt;iCount; ++i)
+    {
+        var symbol = new TerminalSymbol(this.readString(), i);
+        var aux = this.readString();
+        if (aux.length) {
+            symbol.setDisplayName(aux);
+        }
+&nbsp;
+        this.symbols.push(symbol);
+    }
+};
+&nbsp;
+/**
+ *  Reads the SubScanners section
+ */
+Deserializer.prototype.readDfaSection = function() {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_DFA_SECTION);
+&nbsp;
+    var i,
+        iCount = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    this.dfas = [];
+&nbsp;
+    this.targetActionList = [];
+&nbsp;
+    for (i = 0; i &lt; iCount; ++i) {
+        this.dfas.push(this.readSingleDfa());
+    }
+&nbsp;
+&nbsp;
+    for (i = 0; i &lt; this.targetActionList.length; ++i) {
+&nbsp;
+        var ar = this.targetActionList[i],
+            action = ar[1],
+            sourceDfa = this.dfas[ar[0]],
+            targetDfa = this.dfas[ar[3]],
+            triggerSymbol = this.symbols[ar[2]];
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (action === PtqFileConst.DFA_ACTION_BEGIN) {
+            sourceDfa.upsertAction(triggerSymbol).start = targetDfa;
+        }
+        else <span class="cstat-no" title="statement not covered" >if (action === PtqFileConst.DFA_ACTION_GOTO) {</span>
+<span class="cstat-no" title="statement not covered" >            sourceDfa.upsertAction(triggerSymbol).gotoTarget = targetDfa;</span>
+        }
+&nbsp;
+    }
+};
+&nbsp;
+&nbsp;
+/**
+ *  Reads a single SubScanner section
+ */
+Deserializer.prototype.readSingleDfa = function() {
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_SINGLE_DFA);
+&nbsp;
+    var i,
+        name = this.readString();
+&nbsp;
+    // read state subsection
+    this.assertConst(PtqFileConst.BEGIN_DFA_STATE_SECTION);
+&nbsp;
+&nbsp;
+    var iCountStates = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    var states = [];
+    for (i = 0; i &lt; iCountStates; ++i) {
+        states.push(new State());
+    }
+&nbsp;
+    var iCountFinal = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+    for (i = 0; i &lt; iCountFinal; ++i) {
+        var iStateIndex = this.readHTF8(),
+            iSymbolIndex = this.readHTF8();
+        states[iStateIndex].acceptedSymbol = this.symbols[iSymbolIndex];
+    }
+&nbsp;
+&nbsp;
+    // read edge subsection
+    this.assertConst(PtqFileConst.BEGIN_DFA_EDGE_SECTION);
+&nbsp;
+    var iCountEdges = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+    var edges = []; // new ArrayList&lt;ArrayList&lt;Edge&gt;&gt;(iCountStates);
+    for (i = 0; i &lt; iCountStates; ++i) {
+        edges.push([]);
+    }
+    for (i = 0; i &lt; iCountEdges; ++i) {
+        var iSrc = this.readHTF8();
+        var iDst = this.readHTF8();
+        var iSet = this.readHTF8();
+&nbsp;
+        edges[iSrc].push(new Edge(
+            states[iSrc],
+            states[iDst],
+            this.characterSets[iSet]
+        ));
+&nbsp;
+    }
+&nbsp;
+    for (i = 0; i &lt; iCountStates; ++i) {
+        states[i].edges = edges[i];
+    }
+&nbsp;
+&nbsp;
+&nbsp;
+    // read action subsection
+    this.assertConst(PtqFileConst.BEGIN_DFA_ACTION_SECTION);
+&nbsp;
+    var iCountActions = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+    var act = null,
+        actMap = {},
+        indentFlag = false;
+&nbsp;
+    for (i = 0; i &lt; iCountActions; ++i) {
+        var iType = this.readHTF8(),
+            iSymbolIndex2 = this.readHTF8(),
+            iTarget;
+&nbsp;
+        if (actMap[iSymbolIndex2]) {
+            act = actMap[iSymbolIndex2];
+        }
+        else {
+            act = new Action(this.symbols[iSymbolIndex2]);
+            actMap[iSymbolIndex2] = act;
+        }
+&nbsp;
+        switch (iType) {
+&nbsp;
+            case PtqFileConst.DFA_ACTION_IGNORE:
+                act.ignore = true;
+                break;
+&nbsp;
+            case PtqFileConst.DFA_ACTION_PUSHBACK:
+                act.pushback = true;
+                break;
+&nbsp;
+            case PtqFileConst.DFA_ACTION_END:
+                act.end = true;
+                break;
+&nbsp;
+            case PtqFileConst.DFA_ACTION_INDENT:
+                act.indent = true;
+                indentFlag = true;
+                this.containsIndentFlag = true;
+                break;
+&nbsp;
+            case PtqFileConst.DFA_ACTION_BEGIN:
+            case PtqFileConst.DFA_ACTION_GOTO:
+                iTarget = this.readHTF8();
+&nbsp;
+                var arAction = [];
+                arAction.push(this.dfas.length); // dfa index
+                arAction.push(iType);            // action type
+                arAction.push(iSymbolIndex2);     // symbol index
+                arAction.push(iTarget);          // action target
+                this.targetActionList.push(arAction);
+                break;
+&nbsp;
+<span class="branch-6 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+        }
+    }
+&nbsp;
+    var res = new SubScanner(name, states[0]);
+    res.indentBased = indentFlag;
+&nbsp;
+&nbsp;
+    var keys = [];
+    for (var key in actMap) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (actMap.hasOwnProperty(key)) {
+            res.setAction(actMap[key]);
+        }
+    }
+&nbsp;
+    return res;
+&nbsp;
+};
+&nbsp;
+&nbsp;
+&nbsp;
+// =============================== PARSER READING ============================== //
+&nbsp;
+&nbsp;
+/**
+ *  Reads the parser section of the stream
+ * 
+ * @return {Parser} the deserialized parser
+ */
+Deserializer.prototype.readParserSection = function() {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_PARSER_SECTION);
+&nbsp;
+&nbsp;
+    this.parserType = this.readHTF8();
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+&nbsp;
+    // AbstractSymbol[]
+    var symbolTable = this.readSymbolTableSection();
+&nbsp;
+    var startSymbol = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+    // GrammarRule[]
+    var ruleTable = this.readRuleTableSection(symbolTable);
+&nbsp;
+&nbsp;
+&nbsp;
+    switch (this.parserType) {
+<span class="branch-0 cbranch-no" title="branch not covered" >        case PtqFileConst.PARSER_TYPE_LR0:</span>
+<span class="branch-1 cbranch-no" title="branch not covered" >        case PtqFileConst.PARSER_TYPE_SLR:</span>
+        case PtqFileConst.PARSER_TYPE_LR1:
+        case PtqFileConst.PARSER_TYPE_LALR1:
+        case PtqFileConst.PARSER_TYPE_LRED1:
+&nbsp;
+            // LRAction[][]
+            var lrTable = this.readLR1TableSection();
+&nbsp;
+            return new Parser(lrTable, ruleTable, symbolTable, startSymbol, this.scanner);
+&nbsp;
+<span class="branch-5 cbranch-no" title="branch not covered" >        default:</span>
+<span class="cstat-no" title="statement not covered" >            throw 'Unknown parser type';</span>
+&nbsp;
+    }
+&nbsp;
+};
+&nbsp;
+&nbsp;
+&nbsp;
+/**
+ *  Reads the symbol table section
+ * 
+ * @return {AbstractSymbol[]} the symbol table
+ */
+Deserializer.prototype.readSymbolTableSection = function () {
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_SYMBOL_SECTION);
+&nbsp;
+    var iSymbolCount = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    var i,
+        iFstNonTerminalIndex = this.readHTF8(),
+&nbsp;
+        // TerminalSymbol[]
+        scannerSymbolTable = this.scanner.getPublicSymbolTable(),
+&nbsp;
+        // AbstractSymbol[]
+        symbolTable = [];
+&nbsp;
+    for (i = 0; i &lt; iFstNonTerminalIndex; ++i) {
+        symbolTable.push(scannerSymbolTable[i]);
+    }
+&nbsp;
+    for (i = iFstNonTerminalIndex; i &lt; iSymbolCount; ++i) {
+        symbolTable.push(new NonTerminalSymbol(this.readString(), i));
+    }
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+    return symbolTable;
+};
+&nbsp;
+&nbsp;
+/**
+ *  Reads the rule table section
+ * 
+ * @param {AbstractSymbol[]} symbolTable the previously read symbol table
+ * @return {GrammarRule[]} the rule table
+ */
+Deserializer.prototype.readRuleTableSection = function(symbolTable) {
+&nbsp;
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_RULE_SECTION);
+&nbsp;
+    var iRuleCount = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    // GrammarRule[]
+    var ruleTable = [];
+&nbsp;
+    for (var i = 0; i &lt; iRuleCount; ++i) {
+&nbsp;
+        var iRuleLength = this.readHTF8();
+&nbsp;
+        // AbstractSymbol[]
+        var tail = [];
+&nbsp;
+        var iHeadIndex = this.readHTF8();
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (iHeadIndex &gt;= symbolTable.length) {
+<span class="cstat-no" title="statement not covered" >            throw 'The stream contains corrupt data (index out of bounds)';</span>
+        }
+&nbsp;
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!(symbolTable[iHeadIndex] instanceof NonTerminalSymbol)) {
+<span class="cstat-no" title="statement not covered" >            throw 'The stream contains corrupt data (head of rule is terminal)';</span>
+        }
+&nbsp;
+        for (var j = 1; j &lt; iRuleLength; ++j) {
+&nbsp;
+            var iSymbolIndex = this.readHTF8();
+&nbsp;
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (iSymbolIndex &gt;= symbolTable.length) {
+<span class="cstat-no" title="statement not covered" >                throw 'The stream contains corrupt data (index out of bounds)';</span>
+            }
+&nbsp;
+            tail.push(symbolTable[iSymbolIndex]);
+        }
+        ruleTable.push(new GrammarRule(i, symbolTable[iHeadIndex], tail));
+    }
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+    return ruleTable;
+};
+&nbsp;
+/**
+ *  Reads the LR action-goto table section
+ * 
+ * @return {LRAction[]} the LR action-goto table (square matrix)
+ */
+Deserializer.prototype.readLR1TableSection = function () {
+&nbsp;
+    this.assertConst(PtqFileConst.BEGIN_TABLE_SECTION);
+&nbsp;
+    var iRows = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    var iCols = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+&nbsp;
+    var iActionCount = this.readHTF8();
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_UNIT_SEPARATOR);
+&nbsp;
+    
+    var i,
+        lrTable = []; // LRAction[][]
+&nbsp;
+    for (i = 0; i &lt; iRows; ++i) {
+        lrTable.push([]);
+    }
+&nbsp;
+    for (i = 0; i &lt; iActionCount; ++i) {
+        var iRow = this.readHTF8(),
+            iCol = this.readHTF8(),
+&nbsp;
+            action = LRActionType.get(this.readHTF8());
+&nbsp;
+        switch (action.code) {
+<span class="branch-0 cbranch-no" title="branch not covered" >            case LRActionType.NONE.code:</span>
+<span class="cstat-no" title="statement not covered" >                break;</span>
+            case LRActionType.ACCEPT.code:
+                lrTable[iRow][iCol] = new LRAction(action);
+                break;
+            case LRActionType.SHIFT.code:
+            case LRActionType.GOTO.code:
+            case LRActionType.REDUCE.code:
+                var iTarget = this.readHTF8();
+                lrTable[iRow][iCol] = new LRAction(action, iTarget);
+                break;
+<span class="branch-5 cbranch-no" title="branch not covered" >            default:</span>
+<span class="cstat-no" title="statement not covered" >                throw 'Error reading LR1 section: undefined LRAction';</span>
+        }
+&nbsp;
+    }
+&nbsp;
+    this.assertConst(PtqFileConst.BYTE_RECORD_SEPARATOR);
+&nbsp;
+    return lrTable;
+};
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+/**
+ * Deserialize a complete PTQ stream (with header information)
+ *
+ * @param {string} is the hexadecimal serialized PTQ string
+ * @return {Parser|Scanner} the resulting parser or scanner
+ */
+Deserializer.prototype.deserialize = function() {
+&nbsp;
+&nbsp;
+    this.readHeader();
+    this.readInfoSection();
+&nbsp;
+&nbsp;
+    this.scanner = this.readScannerSection();
+&nbsp;
+&nbsp;
+    this.scanner.name = this.name;
+&nbsp;
+&nbsp;
+    if (this.is.hasNext()) {
+        return this.readParserSection();
+    }
+&nbsp;
+    return this.scanner;
+};
+&nbsp;
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:45:32 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

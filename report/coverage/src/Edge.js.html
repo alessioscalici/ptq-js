@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/Edge.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/Edge.js</span></h1>
+    <h2>
+        Statements: <span class="metric">97.14% <small>(34 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">83.33% <small>(10 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(3 / 3)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">97.14% <small>(34 / 35)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; Edge.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2744</span>
+<span class="cline-any cline-yes">2744</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2744</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2744</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-yes">402095</span>
+<span class="cline-any cline-yes">391059</span>
+<span class="cline-any cline-yes">391059</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-yes">11036</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2746</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">23783</span>
+<span class="cline-any cline-yes">23783</span>
+<span class="cline-any cline-yes">23783</span>
+<span class="cline-any cline-yes">36441</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">36441</span>
+<span class="cline-any cline-yes">12588</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23853</span>
+<span class="cline-any cline-yes">16903</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6950</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16833</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 
+ * Represents an edge of a scanner DFA, linking
+ * two DFA states and labelled with the accepted inputs.
+ * 
+ * 
+ * @param {State} sourceState the source state
+ * @param {State} targetState the state this edge points to
+ * @param {number[]} codePointSet a Set containing the inputs accepted by this edge
+ *
+ *
+ * @property {State} sourceState the source DFA state
+ * @property {State} targetState the target DFA state
+ * @property {number[]} ranges (number[][]) ranges The inputs accepted by this edge
+ * 
+ * 
+ * @constructor
+ * @author Alessio Scalici
+ */
+var Edge = function(sourceState, targetState, codePointSet) {
+&nbsp;
+&nbsp;
+    this.sourceState = sourceState;
+    this.targetState = targetState;
+&nbsp;
+&nbsp;
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (codePointSet) {
+&nbsp;
+        /*
+         * The inputs accepted by this edge. They are represented this way:
+         * this matrix is Nx2, every row represents a continuous range of integers.
+         * Here's an example:
+         * [0][3]
+         * [12][12]
+         * [18][20]
+         *
+         * accepts the following inputs:
+         * [0][1][2][3][12][18][19][20]
+         *
+         * this allows memory saving because edge accepted inputs trend to be contiguous
+         */
+        this.ranges = this.getRanges(codePointSet);
+    }
+};
+&nbsp;
+&nbsp;
+/**
+ * Turns an integer Set in ranges representation
+ * 
+ * @param {number[]} cpset the integer set
+ * @return the ranges representation of the input set
+ */
+Edge.prototype.getRanges = function(cpset) {
+&nbsp;
+&nbsp;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!cpset || !cpset.length) {
+<span class="cstat-no" title="statement not covered" >        return [];</span>
+    }
+&nbsp;
+    var na,
+        res = [],
+        ar = cpset.slice(),
+        a = ar[0],
+        b = ar[0];
+&nbsp;
+    for (var j=1; j&lt;ar.length; ++j) {
+        if (ar[j] === b+1) {
+            b = ar[j];
+            continue;
+        }
+        na = [];
+        na.push(a);
+        na.push(b);
+&nbsp;
+        res.push(na);
+        a = ar[j];
+        b = ar[j];
+    }
+&nbsp;
+    na = [];
+    na.push(a);
+    na.push(b);
+    res.push(na);
+&nbsp;
+    return res;
+};
+&nbsp;
+&nbsp;
+/**
+ * Returns true if the integer i is accepted by this edge, false otherwise
+ *
+ * @param {number} i the input to check
+ * @return {boolean} true if the integer i is accepted by this edge, false otherwise
+ */
+Edge.prototype.accepts = function(i) {
+    var imin = 0;
+    var imax = this.ranges.length-1;
+    while (imax &gt;= imin) {
+        var imid = (imin + imax) &gt;&gt;&gt; 1; // (imin + imax) / 2
+&nbsp;
+        if (this.ranges[imid][1] &lt;  i) {
+            imin = imid + 1;
+        }
+        else if (this.ranges[imid][0] &gt; i ) {
+            imax = imid - 1;
+        }
+        else {
+            return true;
+        }
+    }
+    // not found
+    return false;
+};</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:45:32 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

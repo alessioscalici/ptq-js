@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - SubScanner.js</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <link href="../../assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="../../assets/css/vendor/codemirror.css" rel="stylesheet">
+  <link href="../../assets/css/plato.css" rel="stylesheet">
+  <link href="../../assets/css/plato-file.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="http://github.com/es-analysis/plato">Plato on Github</a>
+    <ul class="nav navbar-nav">
+      <li>
+        <a href="../../index.html">Report Home</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div class="jumbotron">
+  <div class="container">
+    <h1>SubScanner.js</h1>
+  </div>
+</div>
+
+<div class="container aggregate-stats">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Maintainability <a href="http://blogs.msdn.com/b/codeanalysis/archive/2007/11/20/maintainability-index-range-and-meaning.aspx"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="A value between 0 and 100 that represents the relative ease of maintaining the code. A high value means better maintainability." data-original-title="Maintainability Index"  data-container="body"></i></a></h2>
+      <p class="stat">91.57</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
+      <p class="stat">246</p>
+    </div>
+  </div>
+  <div class="row historical">
+    <div class="col-md-6">
+      <p id="chart_historical_maint" class="chart"></p>
+    </div>
+    <div class="col-md-6">
+      <p id="chart_historical_sloc" class="chart"></p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header">Difficulty  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="The difficulty measure is related to the difficulty of the program to write or understand." data-original-title="Difficulty" data-container="body"></i></a></h2>
+      <p class="stat">47.86</p>
+    </div>
+    <div class="col-md-6">
+      <h2 class="header">Estimated Errors  <a href="http://en.wikipedia.org/wiki/Halstead_complexity_measures"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Halstead's delivered bugs is an estimate for the number of errors in the implementation." data-original-title="Delivered Bugs" data-container="body"></i></a></h2>
+      <p class="stat">1.48</p>
+    </div>
+  </div>
+</div>
+
+<div class="container charts">
+  <div class="row">
+    <h2 class="header">Function weight</h2>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3 class="chart-header">By Complexity <a href="http://en.wikipedia.org/wiki/Cyclomatic_complexity"><i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="This metric counts the number of distinct paths through a block of code. Lower values are better." data-original-title="Cyclomatic Complexity" data-container="body"></i></a></h3>
+      <div id="fn-by-complexity" class="stat"></div>
+    </div>
+    <div class="col-md-6">
+      <h3 class="chart-header">By SLOC  <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h3>
+      <div id="fn-by-sloc" class="stat"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <textarea id="file-source" class="col-md-12">/**
+ * 
+ * Contains the scanning algorythm and represents a single
+ * scanner DFA. It also handles symbol actions like DFA start, end and switch, newlines
+ * and ignoring symbols.
+ *
+ * @param {string} sName the name of SubScanner in the scanner specification
+ * @param {State} oRootState the SubScanner initial state
+ *
+ *
+ * @property {string} name the SubScanner name
+ * @property {State} initialState the SubScanner initial state
+ * @property {Scanner} parent the parent Scanner
+ * @property {object} actions maps terminal symbol -&gt; action
+ * @property {number} tokenLength the current recognized token length 
+ * 
+ * 
+ * @constructor
+ * @author Alessio Scalici
+ */
+var SubScanner = function(sName, oRootState) {
+
+    this.name = sName;
+    this.initialState = oRootState;
+    this.parent = null;
+    this.actions = {};
+    this.tokenLength = 0;
+
+};
+
+
+/**
+ * Returns the action object associated with the specified symbol, if it
+ * doesn&#039;t exist, it will be created before returning it
+ * 
+ * @param {TerminalSymbol} sym the teminal symbol
+ * 
+ * @return {Action} the action object associated with the specified symbol
+ */
+SubScanner.prototype.upsertAction = function(sym) {
+
+    var act = this.actions[sym.name];
+
+    if (!act) {
+        act = new Action(sym);
+        this.actions[sym.name] = act;
+    }
+    return act;
+};
+
+
+/**
+ * Returns the Action object if this sub-scanner executes actions at the given symbol recognition,
+ * null otherwise
+ * 
+ * @param {TerminalSymbol} sym the symbol
+ * 
+ * @return {Action} the Action object if this sub-scanner executes actions at the given symbol recognition,
+ * null otherwise
+ */
+SubScanner.prototype.getAction = function(sym) {
+    return this.actions[sym.name] || null;
+};
+
+/**
+ * Sets an action for this sub-scanner. The related object is contained in the Action object
+ * passed as argument
+ * 
+ * @param {Action} a the Action object
+ */
+SubScanner.prototype.setAction = function(a) {
+    this.actions[a.symbol.name] = a;
+};
+
+
+/**
+ * Returns the next state given the current state and an input.
+ * If no state can be reached for this input, returns null
+ * 
+ * @param {State} curState the current DFA state
+ * @param {number} cp the input code point
+ * 
+ * @return {State} the next state if the input is accepted, null otherwise
+ */
+SubScanner.prototype.nextState = function(curState, cp)
+{
+    for (var i=0; i&lt;curState.edges.length; ++i) {
+        if (curState.edges[i].accepts(cp)) {
+            return curState.edges[i].targetState;
+        }
+    }
+    return null;
+};
+
+
+/**
+ * Recognizes the next token. If the recognized token has to be ignored
+ * returns null, otherwise returns the token node. If a lexical error occurs, returns
+ * the special error token.
+ * 
+ * @return {TerminalNode} the next token, null if the token has to be ignored, the special error token
+ * if a lexical error occurs
+ */
+SubScanner.prototype.scan = function() {
+    if (!this.parent) {
+        throw (&quot;parent cannot be null&quot;);
+    }
+
+
+    var res = null,     // TerminalNode
+        dataIndex = 0,  // number
+        curState = this.initialState, // State
+        acceptedSymbol = this.parent.getSymbol(SpecialSymbol.ERROR.code), // TerminalSymbol
+        // INDENT DELTA
+        newlineFlag
+        // INDENT DELTA END
+        ;
+
+    // INDENT DELTA
+    if (this.indentBased) {
+        newlineFlag = false;
+    }
+    // INDENT DELTA END
+
+    this.parent.tokenBegin();
+
+
+    // read the next character
+    var prevChar = -1, // number
+        curChar = this.parent.source.read();  // number // FIXME read() = parent.read()
+
+
+    // check if there&#039;s no more characters in the stream
+    if (!curChar) {
+
+        // INDENT DELTA
+        if (this.indentBased) {
+            this.parent.closePendingBlocks();
+        }
+        // INDENT DELTA END
+
+        res = new TerminalNode(this.parent.getSymbol(SpecialSymbol.EOS.code));
+        res.data = &#039;&#039;;
+        return res;
+    }
+
+    while (curChar) {
+
+        ++this.tokenLength;
+
+        var next = this.nextState(curState, curChar); // State
+        if (!next) {
+            break; // exit loop
+        } else {
+            curState = next;
+            if (curState.isFinal()) {
+                // update token data
+                this.parent.newCol(this.tokenLength - dataIndex);
+                dataIndex = this.tokenLength;
+                acceptedSymbol = curState.acceptedSymbol;
+            }
+        }
+
+        // unicode newline
+        if (curChar === 0xA || curChar === 0xD || curChar === 0xC || curChar === 0xB || curChar === 0x85 || curChar === 0x2028 || curChar === 0x2029)
+        {
+            if (!(prevChar === 0xD &amp;&amp; curChar === 0xA)) {
+                ++this.parent.curPos.line;
+            }
+            this.parent.curPos.col = Scanner.INITIAL_COL;
+
+            // INDENT DELTA
+            if (this.indentBased) {
+                this.parent.indenting = true;
+                newlineFlag = true;
+            }
+            // INDENT DELTA END
+        }
+
+        prevChar = curChar;
+        curChar = this.parent.source.read(); // FIXME read() = parent.read()
+
+    }// end for
+
+
+    // retrieve action for this symbol
+    var act = this.actions[acceptedSymbol.name];
+
+
+    // INDENT DELTA
+    if (this.indentBased &amp;&amp; this.parent.indenting) {
+        if (act &amp;&amp; act.indent) {
+            this.parent.level += dataIndex;
+        } else  {
+            if (!newlineFlag) {
+                this.parent.processLevel();
+
+                this.parent.indenting = false;
+            }
+            this.parent.level = 0;
+        }
+    }
+    // INDENT DELTA END
+
+
+    // action handling
+    if(act)
+    {
+        if (act.pushback &amp;&amp; (act.gotoTarget || act.start || act.end))
+        {
+            this.parent.source.unread(this.tokenLength);
+            this.tokenLength = 0;
+
+            this.parent.tokenReset();
+            res = null; // ignore token
+        } else {
+            res = new TerminalNode(acceptedSymbol);
+        }
+
+        if (act.end) {
+            this.parent.end();
+        }
+        if (act.start) {
+            this.parent.begin(act.start);
+        }
+        if (act.gotoTarget) {
+            this.parent.currentScanner = act.gotoTarget;
+        }
+    } else {
+        res = new TerminalNode(acceptedSymbol);
+    }
+
+
+    if (res)
+    {
+        if (acceptedSymbol.index === SpecialSymbol.ERROR.code) {
+            // unread the this.buffer data
+            this.parent.source.unread(this.tokenLength);
+            this.tokenLength = 0;
+
+            this.parent.tokenReset();
+
+            this.parent.newCol(1);
+            res.data = String.fromCharCode(this.parent.source.read()); // FIXME read() = parent.read()
+        } else  {
+            // non error
+
+            var n = this.tokenLength - dataIndex;
+            this.parent.source.unread(n);
+            this.tokenLength -= n; //pops last n elements from the &#039;buffer&#039;
+
+            res = new TerminalNode(acceptedSymbol);
+
+            res.data = this.parent.source.lastString(this.tokenLength);
+            
+        }
+    }
+
+    this.tokenLength = 0;
+
+    if (act &amp;&amp; act.ignore) {
+        return null; // ignore token
+    }
+
+    return res;
+};</textarea>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>.</p>
+  </div>
+</footer>
+
+<script type="text/html" id="complexity-popover-template">
+  <div class="complexity-notice">
+    Complexity : {{ complexity.cyclomatic }} <br>
+    Length : {{ complexity.halstead.length }} <br>
+    Difficulty : {{ complexity.halstead.difficulty.toFixed(2) }} <br>
+    Est # bugs : {{ complexity.halstead.bugs.toFixed(2) }}<br>
+  </div>
+</script>
+
+<script type="text/javascript" src="../../assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="../../assets/scripts/bundles/codemirror.js"></script>
+<script type="text/javascript" src="../../assets/scripts/codemirror.markpopovertext.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="../../assets/scripts/plato-file.js"></script>
+</body>
+</html>

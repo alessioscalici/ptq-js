@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/NonTerminalNode.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/NonTerminalNode.js</span></h1>
+    <h2>
+        Statements: <span class="metric">98.11% <small>(52 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">88.24% <small>(30 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(9 / 9)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">98.11% <small>(52 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; NonTerminalNode.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2552</span>
+<span class="cline-any cline-yes">2552</span>
+<span class="cline-any cline-yes">2552</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">4043</span>
+<span class="cline-any cline-yes">4043</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 
+ * A parse tree non-terminal node.
+ * It can have one or more child (nodes without child are terminal).
+ * The root of a parse tree is always a non-terminal node
+ * 
+ * 
+ * @param {GrammarRule} rule the rule reduced to create this node
+ *
+ *
+ * @property {NonTerminalSymbol} symbol symbol represented by this node (the rule head)
+ * @property {GrammarRule} rule the rule reduced to obtain this node
+ * @property {TerminalNode|NonTerminalNode[]} children the children nodes
+ * 
+ * 
+ * @constructor
+ * @author Alessio Scalici
+ */
+var NonTerminalNode = function(rule)  {
+&nbsp;
+    this.symbol = rule.head;
+    this.rule = rule;
+    this.children = [];
+};
+&nbsp;
+&nbsp;
+/**
+ * Returns the calculated NonTerminalNode position (based on children TerminalNodes)
+ * @return {Position} the calculated NonTerminalNode position
+ */
+NonTerminalNode.prototype.getPosition = function () {
+    if (!this.children || !this.children.length)
+    {
+        if (this.parent) {
+            var index = this.parent.children.indexOf(this);
+            if (index &lt; this.parent.children.length-1) {
+                return this.parent.children[index +1].getPosition();
+            }
+            return new Position();
+        } else {
+            return new Position();
+        }
+    }
+&nbsp;
+    return this.children[0].getPosition();
+};
+&nbsp;
+&nbsp;
+/**
+ * Returns the calculated length position (based on children TerminalNodes)
+ * @return {number} the calculated node length 
+ */
+NonTerminalNode.prototype.getLength = function () {
+&nbsp;
+    if (!this.children || !this.children.length || !this.getPosition() || !this.children[this.children.length-1].getPosition()) {
+        return 0;
+    }
+    var last = this.children[this.children.length-1];
+    return last.getPosition().index + last.getLength() - this.getPosition().index;
+};
+&nbsp;
+&nbsp;
+/**
+ * Adds a child node in the first position
+ * 
+ * @param {TerminalNode|NonTerminalNode} child the node to add as a child
+ */
+NonTerminalNode.prototype.addChildFirst = function (child) {
+    this.children.unshift(child);
+    child.parent = this;
+};
+&nbsp;
+&nbsp;
+/**
+ * Adds a child node in the last position
+ * 
+ * @param {TerminalNode|NonTerminalNode} child the node to add as a child
+ */
+NonTerminalNode.prototype.addChildLast = function (child) {
+    this.children.push(child);
+    child.parent = this;
+};
+&nbsp;
+&nbsp;
+/**
+ * Returns a string representation of the node
+ * 
+ * @param {string} a string representation of the node
+ */
+NonTerminalNode.prototype.toString = function () {
+    var pos = this.getPosition();
+    return this.rule.toString() + " ||  pos: " + pos.index + " (" + pos.line + "," + pos.col + "), len: " + this.getLength();
+};
+&nbsp;
+&nbsp;
+/**
+ * Checks for equality
+ * 
+ * @param {object} the object to compare
+ * 
+ * @return {boolean} true if the object equals
+ */
+NonTerminalNode.prototype.equals = function (o) {
+    if (o === this) {
+        return true;
+    }
+    if (!(o instanceof NonTerminalNode)) {
+        return false;
+    }
+&nbsp;
+    if (this.children.length !== o.children.length) {
+        return false;
+    }
+&nbsp;
+    for (var i=0; i&lt;this.children.length; ++i) {
+        if (!this.children[i].equals(o.children[i])) {
+            return false;
+        }
+    }
+    return (!this.rule &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >!o.rule)</span> || this.rule &amp;&amp; this.rule.equals(o.rule);
+};
+&nbsp;
+&nbsp;
+/**
+ * Returns a string representing the tree (human readable)
+ * 
+ * @return {string} a string representation of the tree
+ */
+NonTerminalNode.prototype.treeToString = function (deep) {
+&nbsp;
+    deep = deep || 0;
+&nbsp;
+    var t = function(deep){
+        var s = '';
+        for (var i = 0; i &lt; deep; ++i) {
+            s += i &lt; deep - 1 ? <span class="branch-0 cbranch-no" title="branch not covered" >'| ' </span>: '|-';
+        }
+        s += '-';
+        return s;
+    };
+&nbsp;
+    var str = '\n' + t(deep) + this.toString();
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (this.children) {
+        for (var i = 0; i &lt; this.children.length; ++i) {
+            
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (this.children[i] instanceof NonTerminalNode) {
+<span class="cstat-no" title="statement not covered" >                str += this.children[i].treeToString(deep + 1);</span>
+            } else {
+                str += '\n' + t(deep + 1) + this.children[i].toString();
+            }
+        }
+    }
+    return str;
+};</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:45:32 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

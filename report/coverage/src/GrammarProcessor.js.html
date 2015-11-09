@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/GrammarProcessor.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../prettify.css">
+    <link rel="stylesheet" href="../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/GrammarProcessor.js</span></h1>
+    <h2>
+        Statements: <span class="metric">95.74% <small>(45 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">57.14% <small>(8 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">75% <small>(3 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">95.74% <small>(45 / 47)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../index.html">All files</a> &#187; <a href="index.html">src/</a> &#187; GrammarProcessor.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">30</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">18</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-yes">24</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * 
+ * Contains methods to calculate first sets, used in Parser error reporting (expected symbols)
+ * 
+ * @constructor
+ * @author Alessio Scalici
+ */
+var GrammarProcessor = <span class="fstat-no" title="function not covered" >function() {</span>
+&nbsp;
+&nbsp;
+};
+&nbsp;
+&nbsp;
+/**
+ * Process the symbols first sets, used to report expected symbols when a syntax error occurs
+ * 
+ * @param {GrammarRule[]} ruleTable the grammar rule table
+ * @param {Symbol[]} symbolTable the symbol table
+ * 
+ * @return {object} the First Sets map (symbol index -&gt; Symbol[])
+ */
+GrammarProcessor.processFirstSets = function (ruleTable, symbolTable) {
+&nbsp;
+    var addAll = function (target, symbols) {
+        var changed = false;
+        for (var i = 0; i &lt; symbols.length; ++i) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (!target[symbols[i].index]) {
+                changed = true;
+            }
+            target[symbols[i].index] = symbols[i];
+        }
+        return changed;
+    };
+&nbsp;
+    var i, j, k, iFirstNonTerminal = 2;
+&nbsp;
+    for (i = 0; i &lt; symbolTable.length; ++i) {
+        if (symbolTable[i] instanceof NonTerminalSymbol) {
+            iFirstNonTerminal = i;
+            break;
+        }
+    }
+    var nTerm = iFirstNonTerminal;
+    var nNonTerm = symbolTable.length - iFirstNonTerminal;
+&nbsp;
+    var fiSets = {};
+&nbsp;
+&nbsp;
+    var epsilon = new TerminalSymbol("EPSILON", symbolTable.length);
+&nbsp;
+    // for every symbol, initialize an empty set
+    for (i = 0; i &lt; symbolTable.length; ++i) {
+        fiSets[i] = {};
+    }
+    fiSets[epsilon.index] = {};
+&nbsp;
+&nbsp;
+&nbsp;
+    addAll(fiSets[epsilon.index], [epsilon]);
+&nbsp;
+    for (i = 0; i &lt; iFirstNonTerminal; ++i) { // STEP 1 (terminals)
+        addAll(fiSets[i], [symbolTable[i]]);
+    }
+&nbsp;
+    for (i = iFirstNonTerminal; i &lt; symbolTable.length; ++i) { // STEP 2 (non-terminals)
+&nbsp;
+        for (j = 0; j &lt; ruleTable.length; ++j) {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (symbolTable[i].equals(ruleTable[j].head)) {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (ruleTable[j].isEpsilon()) {
+<span class="cstat-no" title="statement not covered" >                    addAll(fiSets[i], [epsilon]);</span>
+                }
+            }
+        }
+    }
+&nbsp;
+    var changed = true; // STEP 3
+    while (changed) {
+        changed = false;
+&nbsp;
+        for (i = iFirstNonTerminal; i &lt; symbolTable.length; ++i) {
+            for (j = 0; j &lt; ruleTable.length; ++j) {
+                <span class="missing-if-branch" title="else path not taken" >E</span>if (symbolTable[i].equals(ruleTable[j].head)) {
+&nbsp;
+                    for (k = 0; k &lt; ruleTable[j].tail.length; ++k) {
+&nbsp;
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if (addAll(fiSets[i], fiSets[i])) {
+<span class="cstat-no" title="statement not covered" >                            changed = true;</span>
+                        }
+                        <span class="missing-if-branch" title="else path not taken" >E</span>if (!fiSets[i][epsilon.index]) {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+&nbsp;
+    var mapFunc = function (key) { 
+        return obj[key]; 
+    };
+&nbsp;
+    var fiKeys = Object.keys(fiSets);
+    for (i = 0; i &lt; fiKeys.length; ++i) {
+        var obj = fiSets[fiKeys[i]];
+        fiSets[fiKeys[i]] = Object.keys(obj).map(mapFunc);
+    }
+&nbsp;
+    return fiSets;
+};</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Nov 09 2015 09:45:32 GMT+0000 (GMT)</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
