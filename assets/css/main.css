@@ -1440,8 +1440,7 @@ ol.default {
         top: 0.05em; }
   /* Wrappers */
   #header-wrapper {
-    padding: 3em 0 1em 0;
-    text-align: center; }
+    padding: 3em 0 1em 0; }
   #footer-wrapper {
     padding: 6em 0 4em 0; }
   /* Header */
@@ -1456,8 +1455,7 @@ ol.default {
     display: none; }
   /* Banner */
   #banner {
-    padding: 4.5em 3em;
-    text-align: center; }
+    padding: 4.5em 3em; }
     #banner ul {
       margin: 2em 0 0 0; }
     #banner .button.icon:before {
@@ -1692,7 +1690,6 @@ ol.default {
     line-height: 3em; }
   /* Banner */
   #banner {
-    text-align: center;
     padding: 15px 15px 15px 15px;
     margin: 0 auto !important; }
     #banner h2 {
@@ -1742,3 +1739,6 @@ ol.default {
     border: 2px solid transparent; }
   .demo-output .node-position {
     margin-left: 20px; }
+
+.demo.hidden, .grammar.hidden {
+  display: none; }

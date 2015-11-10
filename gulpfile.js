@@ -3,6 +3,7 @@
 
 var gulp = require('gulp'),
     sass = require('gulp-sass'),
+    jade = require('gulp-jade'),
     watch = require('gulp-watch'),
     plumber = require('gulp-plumber')
     ;
@@ -26,6 +27,13 @@ var task = {
             }))
             .pipe(plumber.stop())
             .pipe(gulp.dest('assets/css'));
+    },
+    jade : function(){
+        return gulp.src(['index.jade'])
+            .pipe(plumber())
+            .pipe(jade())
+            .pipe(plumber.stop())
+            .pipe(gulp.dest('.'));
     }
 };
 
@@ -37,6 +45,9 @@ var task = {
 
 
 gulp.task('sass', task.sass);
+gulp.task('jade', task.jade);
+
+gulp.task('default', ['sass', 'jade']);
 
 
 
@@ -58,6 +69,15 @@ gulp.task('watch', function(){
     watch(['assets/sass/*.scss'], function(){
         try {
             task.sass()
+            .on('end', task.index);
+        } catch (e) {
+            console.log(e);
+        }
+    });
+
+    watch(['index.jade'], function(){
+        try {
+            task.jade()
             .on('end', task.index);
         } catch (e) {
             console.log(e);

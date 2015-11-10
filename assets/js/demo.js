@@ -97,8 +97,24 @@
         },
         title: 'eded'
       });
-     });
+    });
+
+
+    // see grammar
+    $('.toggle-grammar-btn').click(function() {
+      var grammar = $(this).closest('.container').find('.row.grammar'),
+        demo = $(this).closest('.container').find('.row.demo');
+      if (grammar.hasClass('hidden')) {
+        grammar.removeClass('hidden');
+        demo.addClass('hidden');
+        $(this).text('Show demo');
+      } else {
+        grammar.addClass('hidden');
+        demo.removeClass('hidden');
+        $(this).text('Show grammar');
+      }
+    });
+
 
   });
-
 })(jQuery);

@@ -882,7 +882,7 @@
 
 			#header-wrapper {
 				padding: 3em 0 1em 0;
-				text-align: center;
+				//text-align: center;
 			}
 
 			#footer-wrapper {
@@ -912,7 +912,7 @@
 
 			#banner {
 				padding: 4.5em 3em;
-				text-align: center;
+				//text-align: center;
 
 				ul {
 					margin: 2em 0 0 0;
@@ -1253,7 +1253,7 @@
 		/* Banner */
 
 			#banner {
-				text-align: center;
+				//text-align: center;
 				padding: 15px 15px 15px 15px;
 				margin: 0 auto !important;
 
@@ -1302,6 +1302,7 @@
 
 
 
+// ========================================= DEMO ========================================= //
 
 .demo-input {
 	width: 100%;
@@ -1348,4 +1349,14 @@
 		margin-left: 20px;
 	}
 }
+
+
+// ========================================= GRAMMAR ========================================= //
+
+.demo, .grammar {
+	&.hidden {
+		display: none;
+	}
+}
+
 
