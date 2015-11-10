@@ -3,12 +3,22 @@
 
   var getErrorElem = function (errorRep) {
 
+    var expected = '';
+    if (errorRep.expectedSymbols) {
+      var array = [];
+      for (var i = 0; i < errorRep.expectedSymbols.length; ++i) {
+        array.push('"' + (errorRep.expectedSymbols[i].display || errorRep.expectedSymbols[i].name )+ '"');
+      }
+      expected = 'Expected symbols: ' + array.join(', ');
+    }
+
+
     var res =
     '<div class="node-error">' +
       '<div>' + errorRep.type.name + '</div>' +
       '<div> at line ' + errorRep.lastToken.pos.line + ', col ' + errorRep.lastToken.pos.col + '</div>' +
-
-
+      '<div> Found ' + errorRep.lastToken.symbol.name + '  ' + errorRep.lastToken.data + '</div>' +
+      '<div>' + expected + '</div>' +
     '</div>';
     return res;
   },

@@ -1299,6 +1299,11 @@ ol.default {
       text-decoration: none;
       border-radius: 6px;
       padding: 0.5em 1em 0.5em 1em; }
+    #nav ul li .icon {
+      font-size: 2em;
+      margin: 0;
+      padding: 0;
+      vertical-align: middle; }
     #nav ul li > ul {
       display: none; }
     #nav ul li:hover a, #nav ul li:hover span {
@@ -1757,6 +1762,8 @@ ol.default {
     border: 2px solid transparent; }
   .demo-output .node-position {
     margin-left: 20px; }
+  .demo-output .node-error {
+    color: red; }
 
 .demo.hidden, .grammar.hidden {
   display: none; }
