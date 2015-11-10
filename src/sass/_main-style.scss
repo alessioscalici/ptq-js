@@ -579,8 +579,22 @@
   #logo {
     display: inline-block;
 
+    img {
+      max-height: 1em;
+      margin-right: .3em;
+    }
+
     h1 {
-      background: #d40000;
+      @include flexbox;
+      @include align-items(center);
+      @include justify-content(space-around);
+
+      background: #af0000; /* Old browsers */
+      // background: -moz-linear-gradient(-45deg,  #af0000 0%, #000000 100%); /* FF3.6-15 */
+      // background: -webkit-linear-gradient(-45deg,  #af0000 0%,#000000 100%);  Chrome10-25,Safari5.1-6 
+      // background: linear-gradient(135deg,  #af0000 0%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#af0000', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
       color: #fff;
       border-radius: 6px;
       font-family: 'Ptq Logo', serif;
@@ -1222,7 +1236,7 @@
     /* Wrappers */
 
       #header-wrapper {
-        padding: 3em 0 1.5em 0;
+        padding: 3em 15px 1.5em 15px;
       }
 
       #banner-wrapper {
