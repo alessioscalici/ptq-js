@@ -1,0 +1,66 @@
+<!DOCTYPE html><html><head><title>ptq-js by alessioscalici</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/prism.css"><link rel="stylesheet" href="assets/css/main.css"></head><body class="homepage"><div id="page-wrapper"><div id="header-wrapper"><header class="container"><div id="logo"><h1><a href="index.html">ptq-js</a></h1><span>the Javascript library for Ptq generated parsers</span></div><nav id="nav"><ul><li><a href="tutorial.html">Tutorial</a><a href="report/coverage/src/index.html">Coverage</a><a href="report/complexity/index.html">Complexity</a></li></ul></nav></header></div><div id="banner-wrapper"><div id="banner" class="box container"><div class="row"><div class="12u"><h3>Install ptq-js</h3><b>Via Bower: &nbsp;</b><code>bower install ptq-js --save</code><h3>Include it in your page</h3><pre><code class="language-markup">< script src="bower-components/build/ptq.js"></script></code></pre><h3>Parsing some input</h3><pre><code class="language-javascript">// deserialize the parser
+var ptqParser = ptq.deserialize('d0d4d19ec984e5f8f0f29e8180809ed3c38a9f829f898da0a0819fa8a8819fa9a9819faaaa849fb0b9c1dadfdfe1fa819fabab819fadad819fb0b9839fc1dadfdfe1fa819fafafd48b9f8a9f85dfc5cfd3df8087dfc5d2d2cfd2df8083c4c9d681af8ac9c4c5ced4c9c6c9c5d28088ccc5c6d4dfd0c1d281a885cdc9ced5d381ad84cdd5ccd481aa86ced5cdc2c5d28084d0ccd5d381ab89d2c9c7c8d4dfd0c1d281a98ad7c8c9d4c5d3d0c1c3c580c4819fc484ede1e9eef38a9f899f8189828883858487858a8683878688848982e58c9f808487808580808989858580808285848487868684808182808688808881808386808783e1819fe98a9ed0f79ed38d9f8a84e5f8f0f284f4e5f2ed86e6e1e3f4eff29e8a9ed2899f848a8b888a848a8b858a828a8b848b8c868b848b8c828b828b8c848c848a89828c87828c839ed4919f8e9fcc9f808382848084828680878281808a8182808b8183808c8185818083878182838781858387818683878188838781898387828084838083828385828e8388828d838983828480838884828388848583888486838884888388848983888580838585828289858583858586828a8588838585898385868382848684828686878281868a8187868b8183868c818587898288888083868882838688858386888683868888838688898386898382848984828689878281898b818c898c81858a8382848a8482868a8782818a8b818b8a8c81858b8083838b8583838b8883838b8983838c8083848c8583848c8883848c8983848d8382848d8482868d8782818d8a81908d8b81838d8c81858e8382848e8482868e8782818e8a818f8e8b81838e8c81858f8083818f89838190808380908983809e');
+ 
+// parsing the expression from the example
+var parseTree = ptqParser.parse('5 * (2 + x)');
+ 
+// parseTree will be null if there's a parsing error
+if (parseTree) {
+    // do stuff with the parse tree
+} else {
+    // check what went wrong
+    var errorReport = ptqParser.error;
+    
+    // do something to handle the parsing error
+}</code></pre><h3>Visiting the parse tree</h3><pre><code class="language-javascript">// recursive function to visit the parse tree
+ 
+function visitParseTree (node) {
+ 
+  if (node.rule) {
+      // non-terminal node
+ 
+      var symbolName = node.symbol.name, // the matched non-terminal symbol name
+          rule =       node.rule;        // the grammar rule that was reduced to create this node
+ 
+      // do something with the node data ...
+      console.log('Non-terminal node: ', node);
+ 
+      // visit children nodes
+      for (var i = 0; i < node.children.length; ++i) {
+        visitParseTree(node.children[i]);
+      }
+ 
+  } else {
+      // terminal node
+ 
+      var symbolName = node.symbol.name, // the matched non-terminal symbol name
+          dataString = node.data,        // the string matched by the scanner for this node
+          line =       node.pos.line,    // the line in the source
+          column =     node.pos.col;     // the column in the source
+ 
+      // do something with the node data ...
+      console.log('Terminal node: ', node);
+  }
+}
+ 
+var rootNode = ptqParser.parse('5 * (2 - y)');
+visitParseTree(rootNode);</code></pre><h3>Handling parsing errors</h3><pre><code class="language-javascript">var rootNode = ptqParser.parse('5 * (2 - y '); // oops, I forgot to close the parenthesis
+ 
+// if there's a parsing error, parse() will return null
+if (!rootNode) {
+ 
+    var errorType = ptqParser.error.type,            // the error type (LEXICAL_ERROR, SYNTAX_ERROR)
+        lastToken = ptqParser.error.lastToken,       // you can use this terminal node to get the error position in the source
+        expected =  ptqParser.error.expectedSymbols; // (only for SYNTAX_ERRORs) an array of expected symbols
+ 
+   // example: build a meaningful error message
+   var message = 'Error at line ' + lastToken.pos.line + ', column ' + lastToken.pos.col + ': ' +
+       'found "' + lastToken.symbol.name + '", expected: ';
+   
+   var array = [];
+   for (var i = 0; i < expected.length; ++i) {
+       array.push('"' + expected[i].display + '"');
+   }
+   message += array.join(', ');
+   console.log(message);
+}</code></pre></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="http://alessioscalici.it/ptq/#download" title="Ptq download">Download</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/prism.js"></script><script src="assets/js/main.js"></script><script src="assets/js/ptq/ptq.js"></script></body></html>

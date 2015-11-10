@@ -1,0 +1,56 @@
+// ========================================= DEMO ========================================= //
+
+.demo-input {
+  width: 100%;
+}
+
+.demo-output {
+
+  color: #666;
+
+  .node-data {
+    font-size: 1.2em;
+    color: blue;
+    margin-left: 20px;
+  }
+
+  .tooltip {
+    display: none;
+  }
+
+
+
+  .node-non-terminal, .node-terminal {
+    border-left: 1px dashed blue;
+    margin-top: -5px;
+    padding-left: 20px;
+  }
+
+  .node-root {
+    border-width: 0;
+    margin-top: 0;
+    padding-left: 0;
+  }
+
+  .node-symbol {
+    padding: 3px 5px;
+    margin-left: -1px;
+    border: 2px solid transparent;
+  }
+
+
+
+
+  .node-position {
+    margin-left: 20px;
+  }
+}
+
+
+// ========================================= GRAMMAR ========================================= //
+
+.demo, .grammar {
+  &.hidden {
+    display: none;
+  }
+}

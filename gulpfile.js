@@ -20,16 +20,16 @@ var gulp = require('gulp'),
 var task = {
 
     sass : function(){
-        return gulp.src(['assets/sass/*.scss'])
+        return gulp.src(['src/sass/main.scss', 'src/sass/ie8.scss'])
             .pipe(plumber())
             .pipe(sass({
-                includePaths : ['assets/sass/']
+                includePaths : ['src/sass/']
             }))
             .pipe(plumber.stop())
             .pipe(gulp.dest('assets/css'));
     },
     jade : function(){
-        return gulp.src(['index.jade'])
+        return gulp.src(['src/*.jade'])
             .pipe(plumber())
             .pipe(jade())
             .pipe(plumber.stop())
@@ -46,7 +46,6 @@ var task = {
 
 gulp.task('sass', task.sass);
 gulp.task('jade', task.jade);
-
 gulp.task('default', ['sass', 'jade']);
 
 
@@ -66,7 +65,7 @@ gulp.task('watch', function(){
     watchMode = true;
 
 
-    watch(['assets/sass/*.scss'], function(){
+    watch(['src/sass/*.scss'], function(){
         try {
             task.sass()
             .on('end', task.index);
@@ -75,7 +74,7 @@ gulp.task('watch', function(){
         }
     });
 
-    watch(['index.jade'], function(){
+    watch(['src/*.jade'], function(){
         try {
             task.jade()
             .on('end', task.index);
