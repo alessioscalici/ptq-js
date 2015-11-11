@@ -53,8 +53,132 @@
 
 // ========================================= GRAMMAR ========================================= //
 
-.demo, .grammar {
-  &.hidden {
-    display: none;
+.grammar {
+  pre {
+    padding: 10px;
+    border: 1px inset grey;
+    overflow: auto;
   }
 }
+.demo, .grammar {
+  &.hidden {
+   // display: none;
+  }
+}
+
+.ptqsh {
+  font-family: monospace;
+  display: inline-block;
+  line-height: 1.5em;
+}
+
+
+// BNF SYNTAX HIGHLIGHT
+.ptqsh-bnf {
+
+
+  .ptq- {
+    &LT, &RT, &IDE {
+      color: rgb(0,0,155);
+    }
+
+    &ASSIGN, &PIPE {
+      color: rgb(220,20,60);
+      font-weight: bold;
+    }
+  }
+
+}
+
+// SCANNER SYNTAX HIGHLIGHT
+.ptqsh-scanner {
+
+
+  .ptq- {
+
+    // red
+    &BEGIN_LEX, &RE_START, &RE_END {
+      color: rgb(255,0,0);
+    }
+
+    // black
+    &IDE {
+      color: rgb(0,0,0);
+      font-style: italic;
+    }
+
+    // olive
+    &USER_TOK {
+      color: rgb(128,128,0);
+    }
+
+    // cremisi
+    &STAR, &PLUS, &QUESTION, &PARM_KLEENE, &PIPE, &LP, &RP, &DOT,
+    &MINUS_LB_CARET, &LB_CARET, &LB, &MINUS_LB, &RB {
+      color: rgb(220,20,60);
+      font-weight: bold;
+    }
+
+    // navy
+    &CHAR, &ESC_CHAR, &ESC_SPECIAL_CHAR {
+      color: rgb(0,0,128);
+    }
+
+    // dodger blue
+    &BRACK_CHAR, &BRACK_ESC_CHAR, &BRACK_ESC_SPECIAL_CHAR {
+      color: rgb(30,144,255);
+    }
+
+    // range
+    &RANGE {
+      color: rgb(65,105,225);
+      text-decoration: underline;
+    }
+
+    // royal blue
+    &SPECIAL_CLASS {
+      color: rgb(65,105,225);
+    }
+
+    // steel blue
+    &POSIX_BRACK, &NEG_POSIX_BRACK {
+      color: rgb(70,130,180);
+    }
+
+    // dark cyan
+    &USERSET_POS, &USERSET_NEG {
+      color: rgb(0,139,139);
+    }
+
+    // dark green
+    &UNI_POS, &UNI_NEG {
+      color: rgb(0,128,0);
+    }
+
+    // comment
+    &BLOCK_COMMENT_START, &BLOCK_COMMENT, &BLOCK_COMMENT_END,
+    &LINE_COMMENT_START, &LINE_COMMENT,
+    &RE_COMMENT_START, &RE_COMMENT, &RE_COMMENT_END {
+      color: rgb(0,180,0);
+    }
+
+    // property default symbol names
+    &PROP_EOS, &PROP_ERROR, &PROP_BEGIN, &PROP_END {
+      color: rgb(0,128,128);
+    }
+
+    // property
+    &PRIORITY, &GOTO, &BEGIN, &END, &INDENT, &SKIP, &IGNORE_CASE, &PUSHBACK, &ALPHABET, &NUMBER, &FP, &VP {
+      color: rgb(0,128,128);
+      font-weight: bold;
+    }
+
+    // error
+    &_ERROR_ {
+      background: rgb(225,0,0);
+    }
+  }
+
+}
+
+

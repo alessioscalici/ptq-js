@@ -1765,5 +1765,68 @@ ol.default {
   .demo-output .node-error {
     color: red; }
 
-.demo.hidden, .grammar.hidden {
-  display: none; }
+.grammar pre {
+  padding: 10px;
+  border: 1px inset grey;
+  overflow: auto; }
+
+.ptqsh {
+  font-family: monospace;
+  display: inline-block;
+  line-height: 1.5em; }
+
+.ptqsh-bnf .ptq-LT, .ptqsh-bnf .ptq-RT, .ptqsh-bnf .ptq-IDE {
+  color: #00009b; }
+
+.ptqsh-bnf .ptq-ASSIGN, .ptqsh-bnf .ptq-PIPE {
+  color: crimson;
+  font-weight: bold; }
+
+.ptqsh-scanner .ptq-BEGIN_LEX, .ptqsh-scanner .ptq-RE_START, .ptqsh-scanner .ptq-RE_END {
+  color: red; }
+
+.ptqsh-scanner .ptq-IDE {
+  color: black;
+  font-style: italic; }
+
+.ptqsh-scanner .ptq-USER_TOK {
+  color: olive; }
+
+.ptqsh-scanner .ptq-STAR, .ptqsh-scanner .ptq-PLUS, .ptqsh-scanner .ptq-QUESTION, .ptqsh-scanner .ptq-PARM_KLEENE, .ptqsh-scanner .ptq-PIPE, .ptqsh-scanner .ptq-LP, .ptqsh-scanner .ptq-RP, .ptqsh-scanner .ptq-DOT, .ptqsh-scanner .ptq-MINUS_LB_CARET, .ptqsh-scanner .ptq-LB_CARET, .ptqsh-scanner .ptq-LB, .ptqsh-scanner .ptq-MINUS_LB, .ptqsh-scanner .ptq-RB {
+  color: crimson;
+  font-weight: bold; }
+
+.ptqsh-scanner .ptq-CHAR, .ptqsh-scanner .ptq-ESC_CHAR, .ptqsh-scanner .ptq-ESC_SPECIAL_CHAR {
+  color: navy; }
+
+.ptqsh-scanner .ptq-BRACK_CHAR, .ptqsh-scanner .ptq-BRACK_ESC_CHAR, .ptqsh-scanner .ptq-BRACK_ESC_SPECIAL_CHAR {
+  color: dodgerblue; }
+
+.ptqsh-scanner .ptq-RANGE {
+  color: royalblue;
+  text-decoration: underline; }
+
+.ptqsh-scanner .ptq-SPECIAL_CLASS {
+  color: royalblue; }
+
+.ptqsh-scanner .ptq-POSIX_BRACK, .ptqsh-scanner .ptq-NEG_POSIX_BRACK {
+  color: steelblue; }
+
+.ptqsh-scanner .ptq-USERSET_POS, .ptqsh-scanner .ptq-USERSET_NEG {
+  color: darkcyan; }
+
+.ptqsh-scanner .ptq-UNI_POS, .ptqsh-scanner .ptq-UNI_NEG {
+  color: green; }
+
+.ptqsh-scanner .ptq-BLOCK_COMMENT_START, .ptqsh-scanner .ptq-BLOCK_COMMENT, .ptqsh-scanner .ptq-BLOCK_COMMENT_END, .ptqsh-scanner .ptq-LINE_COMMENT_START, .ptqsh-scanner .ptq-LINE_COMMENT, .ptqsh-scanner .ptq-RE_COMMENT_START, .ptqsh-scanner .ptq-RE_COMMENT, .ptqsh-scanner .ptq-RE_COMMENT_END {
+  color: #00b400; }
+
+.ptqsh-scanner .ptq-PROP_EOS, .ptqsh-scanner .ptq-PROP_ERROR, .ptqsh-scanner .ptq-PROP_BEGIN, .ptqsh-scanner .ptq-PROP_END {
+  color: teal; }
+
+.ptqsh-scanner .ptq-PRIORITY, .ptqsh-scanner .ptq-GOTO, .ptqsh-scanner .ptq-BEGIN, .ptqsh-scanner .ptq-END, .ptqsh-scanner .ptq-INDENT, .ptqsh-scanner .ptq-SKIP, .ptqsh-scanner .ptq-IGNORE_CASE, .ptqsh-scanner .ptq-PUSHBACK, .ptqsh-scanner .ptq-ALPHABET, .ptqsh-scanner .ptq-NUMBER, .ptqsh-scanner .ptq-FP, .ptqsh-scanner .ptq-VP {
+  color: teal;
+  font-weight: bold; }
+
+.ptqsh-scanner .ptq-_ERROR_ {
+  background: #e10000; }
