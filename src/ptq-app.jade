@@ -1,0 +1,228 @@
+doctype html
+html
+  head
+    title ptq-js by alessioscalici
+    meta(charset='utf-8')
+    meta(name='viewport' content='width=device-width, initial-scale=1')
+    link(rel='stylesheet' href='assets/css/prism.css')
+    link(rel='stylesheet' href='assets/css/jquery.qtip.min.css')
+    link(rel='stylesheet' href='assets/css/main.css')
+  body.homepage
+    #page-wrapper
+      #header-wrapper
+        header.container
+          #logo
+            h1
+              img(src='assets/images/logo.png')
+              a(href='index.html') Ptq
+            span the Ptq scanner / parser generator
+          nav#nav
+            ul
+              li
+                a(href='https://github.com/alessioscalici/ptq-js/')
+                  span.icon.fa-github
+                  span GitHub Repo
+                a(href='#overview-section') Overview
+
+
+
+
+
+      #banner-wrapper
+        #banner.box.container
+          .row#overview-section
+            .12u
+
+              article
+                h3 Overview
+                span Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.
+                br
+                span It is designed to be:
+                ul.default
+                  li
+                    b Cross-platform: 
+                    span it's available as Windows installer and executable Jar file
+                  li
+                    b Cross-language: 
+                    span it saves parsers and scanners in files, no language-specific code is generated
+                  li
+                    b Easy to learn: 
+                    span it uses common regular expressions to describe parsers, and Backus-Naur Form for grammars
+                  li
+                    b Unicode compliant: 
+                    span the scanners can handle every Unicode character
+                  li
+                    b Fast: 
+                    span it uses LALR(1) parsing algorithm by default
+
+                br
+
+                span The typical workflow is:
+                ol.default
+                  li Create a new project
+                  li Define the scanner (and eventually the grammar)
+                  li Compile the project and generate the output file
+                  li Include the language-specific library in your project
+                  li Deserialize the output using the library to obtain the parser object
+
+              article
+                h3 First steps
+                ul.default
+                  li Create a new project: click File > New project and insert the name of your project. Ptq will create a sample parser recognizing simple mathematical expressions
+                  li Compile the project clicking Project > Compile
+                  li Open the project tree, then open the Test folder: there's a sample test file called source.txt. Open it (double click).
+
+                div If the last compilation was successful, when you open a test file the editor switches to the Test perspective.
+                div In the Test perspective you can:
+                  ul.default
+                    li Edit the text in the editor and save the file (File > Save all or CTRL+S)
+                    li Double click on the text in the editor to see token informations in the Properties panel
+                    li Click on a symbol name in the Terminal panel to highlight tokens in the editor
+                    li Click on a rule in the Rules panel to highlight rules in the editor
+                    li
+                      b Only for parser projects:
+                      ul
+                        li Click on the "play" symbol in the top-right corner of the editor to see the parse tree in the Parse tree panel, or an error message in the Warning panel
+                        li If the text isn't recognized, an error message appears in the Warning panel. Click on the error message in the Warning panel to highlight the row in the editor
+                        li Click on a node in the Parse tree panel to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)
+
+
+
+
+              article
+                h3 Command line
+
+                h4 Interactive mode:
+
+                div Execute Ptq in interactive mode passing the option -i:
+                  .cmd path/to/ptq/ptq.jar -i
+
+                .cli-command
+                  .cmd {exit | quit}
+                  .desc Prints the current application language
+
+                h4 Projects:
+
+                .cli-command
+                  .cmd create { scanner | parser } < PROJECT_NAME >
+                  .args
+                    .arg-name { scanner | parser}
+                    .arg-desc The project type
+                  .args
+                    .arg-name PROJECT_NAME
+                    .arg-desc The project name. It must contain only numbers, letters and underscores, and must begin with a letter or an underscore
+                  .desc Creates a new project in the current projects directory
+
+                .cli-command
+                  .cmd compile < PROJECT_NAME >
+                  .args
+                    .arg-name PROJECT_NAME
+                    .arg-desc A project name. The project must exists under the current Projects directory
+                  .desc Compiles the project, generating the output scanner/parser file
+
+                .cli-command
+                  .cmd hex < PROJECT_NAME >
+                  .args
+                    .arg-name PROJECT_NAME
+                    .arg-desc A project name. The project must exists under the current Projects directory and must be successfully compiled first
+                  .desc Gets the output in hexadecimal string format
+
+                h4 Settings:
+
+                .cli-command
+                  .cmd set { language | lang } < LANGUAGE >
+                  .args
+                    .arg-name LANGUAGE
+                    .arg-desc The application language to set, e.g. it (Italian), en (English)
+                  .desc Sets the application language
+
+                .cli-command
+                  .cmd set root < PATH >
+                  .args
+                    .arg-name PATH
+                    .arg-desc The path to the new projects directory
+                  .desc Sets the projects directory
+
+                h4 Info:
+                .cli-command
+                  .cmd {echo | print} {language | lang}
+                  .desc Prints the current application language
+
+                .cli-command
+                  .cmd {echo | print} root
+                  .desc Prints the current path of the projects directory
+
+                .cli-command
+                  .cmd {echo | print} project-list
+                  .desc Prints the list of project names in the current projects directory
+
+                .cli-command
+                  .cmd {echo | print} charset-list
+                  .desc Prints the list of available charset (the result is platform dependent)
+
+                .cli-command
+                  .cmd {echo | print} version
+                  .desc Prints the application version number
+
+
+
+
+      #footer-wrapper
+        footer#footer.container
+          .row
+            div(class='3u 6u(medium) 12u$(small)')
+              section.widget.contact
+                h3 Author
+                a(href='http://alessioscalici.it' title='Website') Alessio Scalici
+                ul.style2
+                  li
+                    a(href='https://alessioscalici.github.io' title='GitHub page').icon.fa-github
+                      span.label GitHub page
+                  li
+                    a(href='https://ie.linkedin.com/in/alessioscalici' title='LinkedIn profile').icon.fa-linkedin
+                      span.label LinkedIn
+
+            div(class='3u 6u(medium) 12u$(small)')
+              section.widget.links
+                h3 ptq-js
+                ul.style2
+                  li Fast
+                  li Reliable
+                  li Easy to learn
+            div(class='3u 6u(medium) 12u$(small)')
+              section.widget.links
+                h3 Applications
+                ul.style2
+                  li Language analysis
+                  li Syntax highlighting
+                  li Complex validation
+
+            div(class='3u 6u(medium) 12u$(small)')
+              section.widget.links
+                h3 Ptq resources
+                ul.style2
+                  li
+                    a(href='http://alessioscalici.it/ptq' title='Ptq') Homepage
+                  li
+                    a(href='http://alessioscalici.it/ptq/reference.html' title='Ptq docs') Docs
+                  li
+                    a(href='assets/apps/ptq.jar' title='Ptq download') Download Ptq 2.0.1
+
+
+          .row
+            .12u
+              #copyright
+                ul.menu
+                  li &copy; Alessio Scalici. All rights reserved
+
+    script(src='assets/js/jquery.min.js')
+    script(src='assets/js/jquery.dropotron.min.js')
+    script(src='assets/js/skel.min.js')
+    script(src='assets/js/util.js')
+    | <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    script(src='assets/js/main.js')
+
+    script(src='assets/js/prism.js')
+    script(src='assets/js/jquery.qtip.min.js')
+    script(src='assets/js/ptq/ptq.js')
+    script(src='assets/js/demo.js')
