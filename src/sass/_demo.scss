@@ -60,16 +60,16 @@
     overflow: auto;
   }
 }
-.demo, .grammar {
-  &.hidden {
-   // display: none;
-  }
-}
+
 
 .ptqsh {
   font-family: monospace;
   display: inline-block;
   line-height: 1.5em;
+
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em 0;
 }
 
 
@@ -181,4 +181,23 @@
 
 }
 
+
+
+// ========================================= markdown ========================================= //
+
+.markdown {
+
+  h3 {
+    margin-top: 2em;
+  }
+  code {
+    background: #ddd;
+    border: 1px solid #eee;
+    padding: .2em .5em;
+
+    &.ptqsh {
+      background: #fff;
+    }
+  }
+}
 

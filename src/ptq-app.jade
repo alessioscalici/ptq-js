@@ -31,140 +31,208 @@ html
       #banner-wrapper
         #banner.box.container
           .row#overview-section
-            .12u
-
-              article
-                h3 Overview
-                span Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.
-                br
-                span It is designed to be:
-                ul.default
-                  li
-                    b Cross-platform: 
-                    span it's available as Windows installer and executable Jar file
-                  li
-                    b Cross-language: 
-                    span it saves parsers and scanners in files, no language-specific code is generated
-                  li
-                    b Easy to learn: 
-                    span it uses common regular expressions to describe parsers, and Backus-Naur Form for grammars
-                  li
-                    b Unicode compliant: 
-                    span the scanners can handle every Unicode character
-                  li
-                    b Fast: 
-                    span it uses LALR(1) parsing algorithm by default
-
-                br
-
-                span The typical workflow is:
-                ol.default
-                  li Create a new project
-                  li Define the scanner (and eventually the grammar)
-                  li Compile the project and generate the output file
-                  li Include the language-specific library in your project
-                  li Deserialize the output using the library to obtain the parser object
-
-              article
-                h3 First steps
-                ul.default
-                  li Create a new project: click File > New project and insert the name of your project. Ptq will create a sample parser recognizing simple mathematical expressions
-                  li Compile the project clicking Project > Compile
-                  li Open the project tree, then open the Test folder: there's a sample test file called source.txt. Open it (double click).
-
-                div If the last compilation was successful, when you open a test file the editor switches to the Test perspective.
-                div In the Test perspective you can:
-                  ul.default
-                    li Edit the text in the editor and save the file (File > Save all or CTRL+S)
-                    li Double click on the text in the editor to see token informations in the Properties panel
-                    li Click on a symbol name in the Terminal panel to highlight tokens in the editor
-                    li Click on a rule in the Rules panel to highlight rules in the editor
-                    li
-                      b Only for parser projects:
-                      ul
-                        li Click on the "play" symbol in the top-right corner of the editor to see the parse tree in the Parse tree panel, or an error message in the Warning panel
-                        li If the text isn't recognized, an error message appears in the Warning panel. Click on the error message in the Warning panel to highlight the row in the editor
-                        li Click on a node in the Parse tree panel to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)
+            .12u.markdown
 
 
+              :markdown
+                ### Overview
+              a(name="overview-section")
+              :markdown
+                Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.
+
+                It is designed to be:
+
+                - **Cross-platform**: it's available as Windows installer and executable Jar file
+                - **Cross-language**: it saves parsers and scanners in files, no language-specific code is generated
+                - **Easy to learn**: it uses common regular expressions to describe parsers, and Backus-Naur Form for grammars
+                - **Unicode compliant**: the scanners can handle every Unicode character
+                Fast: it uses LALR(1) parsing algorithm by default
 
 
-              article
-                h3 Command line
+              :markdown
+                ### First steps
+              a(name="first-steps-section")
 
-                h4 Interactive mode:
+              :markdown
+                - Create a new project: click ```File > New project``` and insert the name of your project. Ptq will create a sample parser recognizing simple mathematical expressions
+                - Compile the project clicking ```Project > Compile```
+                - Open the project tree, then open the Test folder: there's a sample test file called *source.txt*. Open it (double click).
 
-                div Execute Ptq in interactive mode passing the option -i:
-                  .cmd path/to/ptq/ptq.jar -i
+                If the last compilation was successful, when you open a test file the editor switches to the **Test perspective**.
 
-                .cli-command
-                  .cmd {exit | quit}
-                  .desc Prints the current application language
+                In the Test perspective you can:
 
-                h4 Projects:
+                - Edit the text in the **editor** and save the file (File > Save all or CTRL+S)
+                - Double click on the text in the editor to see token informations in the **Properties panel**
+                - Click on a symbol name in the **Terminal panel** to highlight tokens in the editor
+                - Click on a rule in the **Rules panel** to highlight rules in the editor
 
-                .cli-command
-                  .cmd create { scanner | parser } < PROJECT_NAME >
-                  .args
-                    .arg-name { scanner | parser}
-                    .arg-desc The project type
-                  .args
-                    .arg-name PROJECT_NAME
-                    .arg-desc The project name. It must contain only numbers, letters and underscores, and must begin with a letter or an underscore
-                  .desc Creates a new project in the current projects directory
+                **Only for parser projects:**
 
-                .cli-command
-                  .cmd compile < PROJECT_NAME >
-                  .args
-                    .arg-name PROJECT_NAME
-                    .arg-desc A project name. The project must exists under the current Projects directory
-                  .desc Compiles the project, generating the output scanner/parser file
-
-                .cli-command
-                  .cmd hex < PROJECT_NAME >
-                  .args
-                    .arg-name PROJECT_NAME
-                    .arg-desc A project name. The project must exists under the current Projects directory and must be successfully compiled first
-                  .desc Gets the output in hexadecimal string format
-
-                h4 Settings:
-
-                .cli-command
-                  .cmd set { language | lang } < LANGUAGE >
-                  .args
-                    .arg-name LANGUAGE
-                    .arg-desc The application language to set, e.g. it (Italian), en (English)
-                  .desc Sets the application language
-
-                .cli-command
-                  .cmd set root < PATH >
-                  .args
-                    .arg-name PATH
-                    .arg-desc The path to the new projects directory
-                  .desc Sets the projects directory
-
-                h4 Info:
-                .cli-command
-                  .cmd {echo | print} {language | lang}
-                  .desc Prints the current application language
-
-                .cli-command
-                  .cmd {echo | print} root
-                  .desc Prints the current path of the projects directory
-
-                .cli-command
-                  .cmd {echo | print} project-list
-                  .desc Prints the list of project names in the current projects directory
-
-                .cli-command
-                  .cmd {echo | print} charset-list
-                  .desc Prints the list of available charset (the result is platform dependent)
-
-                .cli-command
-                  .cmd {echo | print} version
-                  .desc Prints the application version number
+                - Click on the "play" symbol in the top-right corner of the editor to see the parse tree in the **Parse tree panel**, or an error message in the Warning panel
+                - If the text isn't recognized, an error message appears in the **Warning panel**. Click on the error message in the Warning panel to highlight the row in the editor
+                - Click on a node in the **Parse tree panel** to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)
 
 
+              :markdown
+                ### Command line
+              a(name="command-line-section")
+
+              :markdown
+                ##### Start interactive mode
+                Execute Ptq in interactive mode passing the option -i:
+
+                ```
+                path/to/ptq/ptq.jar -i
+                ```
+
+                ##### Exit interactive mode:
+
+                ```
+                exit    # or "quit"
+                ```
+
+
+                ##### Create a new project in the current projects directory
+                ```
+                create PROJECT_TYPE PROJECT_NAME
+                ```
+
+                - PROJECT_TYPE: ```scanner``` or ```parser```
+                - PROJECT_NAME: The project name. It must contain only numbers, letters and underscores, and must begin with a letter or an underscore
+
+
+                ##### Compile the project, generating the output scanner/parser file
+                ```
+                compile PROJECT_NAME
+                ```
+
+                - PROJECT_NAME: A project name. The project must exists under the current Projects directory
+
+
+                ##### Get the output in hexadecimal string format
+                ```
+                hex PROJECT_NAME
+                ```
+
+                - PROJECT_NAME: A project name. The project must exists under the current Projects directory and must be successfully compiled first
+
+                ##### Set the application language
+                ```
+                set language LANGUAGE    # or "set lang LANGUAGE"
+                ```
+
+                - LANGUAGE: the application language to set, possible values are ```it``` (Italian), ```en``` (English)
+
+
+                ##### Set the projects directory
+                ```
+                set root PATH
+                ```
+
+                - PATH: the path to the new projects directory
+
+                ##### Print informations
+                Use the ```echo``` (alias: ```print```) command to print informations:
+
+                - ```echo language``` (or ```print lang```): get the current application language
+                - ```echo root```: get the current path of the projects directory
+                - ```echo project-list```: get the list of project names in the current projects directory
+                - ```echo charset-list```: get the list of available charset (the result is platform dependent)
+                - ```echo version```: get the application version number
+
+
+              :markdown
+                ### Conflicts
+              a(name="conflicts-section")
+
+              :markdown
+                #### Shift/Reduce conflicts (S/R)
+
+                When a grammar allows a rule to be reduced for a certain token, but allows another rule to be shifted, there's a Shift/Reduce conflict. When that token is recognized, the parsing algorithm cannot decide between shifting a rule or reducing the other.
+                Here is an example:
+
+              pre
+                code.ptqsh.ptqsh-bnf.
+                  < if_statement > ::= if < condition > then < statement_list >
+
+                  < if_statement > ::= if < condition > then < statement_list > else < statement_list >
+
+              :markdown
+                The above rules describe a common if-then-else statement. This grammar is ambiguous, because when the "else" terminal is recognized, the parser can take two actions:
+
+                1. Reduce the first rule
+                2. Shift the second rule
+
+                Possible solutions are:
+
+                - Using the "Shift on S/R conflicts" option (always selected by default). When a S/R conflict occurs, the parser generator will always choose to shift. This is a very common behaviour for LR1 parser generators
+                - Modifying the language: in the above example, you can add an "end if" token to terminate the if-then-else statement:
+
+              pre
+                code.ptqsh.ptqsh-bnf.
+                  < if_statement > ::= if < condition > then < statement_list > end_if
+
+                  < if_statement > ::= if < condition > then < statement_list > else < statement_list > end_if
+
+
+              :markdown
+                #### Reduce/Reduce conflicts (R/R)
+
+                A Reduce/Reduce conflict occurs if there are two or more rules that apply to the same sequence of input, so the grammar allows more than one rule to be reduced for a certain token. When that token is recognized, the parsing algorithm cannot decide which of the two rules has to be reduced.
+
+                Usually a R/R conflict indicates a serious problem in the grammar. Usually you can resolve such kind of conflict modifying the grammar.
+
+                #### LALR(1) conflicts
+
+                Because of the way LALR(1) action-goto tables are built, some LR(1) grammars cannot be parsed using LALR(1) algorithm. If you try to generate LALR(1) tables for these grammars, you'll get a R/R conflict.
+
+                If this is the case, the easiest solution is to use the canonical LR1 algorithm or its reduced variant.
+
+
+
+              :markdown
+                ### Scanners
+              a(name="conflicts-section")
+
+              :markdown
+                The scanner is the module that performs lexical analisys.
+                It takes in input a sequence of characters, and returns a sequence of tokens.
+
+                Consider the following Javascript statement:
+
+                ```var iNumber = 6;```
+
+                The lexical analisys would return the following tokens (ignoring whitespace):
+
+                1. ```var```: the var keyword
+                1. ```iNumber```: the variable identifier
+                1. ```=```: the assignment operator
+                1. ```6```: an integer literal
+                1. ```;```: semicolumn
+
+                Here is a scanner for the example above, declared using Ptq scanner language:
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  --------------------------------------------------------------------------
+                  myScanner
+
+                    whitespace   / [:space:] + / -ignore
+
+                    var_keyword  / var /
+                    identifier   / [a-zA-Z_] [a-zA-Z_0-9]* /
+                    equals_op    / = /
+                    integer      / [0-9] + /
+                    semicolon    / ; /
+
+              :markdown
+                Every subscanner begins with two or more Hyphen (-) characters followed by an identifier (the subscanner name), and optionally some subscanner property.
+
+                The subscanner definition contains the patterns to be recognized (terminals). Every terminal is declared specifying a name and a pattern, and optionally some terminal property (in the above example, the "whitespace" terminal has the property **-ignore**, that causes the token to be skipped when recognized).
+
+                # TO BE CONTINUED ...
+                (at the moment you can visit [the old ugly version](http://alessioscalici.it/ptq/reference.html))
 
 
       #footer-wrapper
@@ -225,4 +293,4 @@ html
     script(src='assets/js/prism.js')
     script(src='assets/js/jquery.qtip.min.js')
     script(src='assets/js/ptq/ptq.js')
-    script(src='assets/js/demo.js')
+    script(src='assets/js/ptq-sh.js')

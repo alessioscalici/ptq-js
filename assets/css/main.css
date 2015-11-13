@@ -1114,35 +1114,33 @@ button,
     padding: 0.8em 0.9em; }
 
 /* List */
-ul.default {
+ul {
   list-style: disc;
   padding-left: 1em; }
-  ul.default li {
+  ul li {
     padding-left: 0.5em; }
+  ul.actions li {
+    display: inline-block;
+    padding: 0 0 0 0.25em;
+    margin: 0 0 0 0.25em; }
+    ul.actions li:first-child {
+      margin-left: 0;
+      padding-left: 0; }
+  ul.menu li {
+    border-left: solid 1px #e0e0e0;
+    display: inline-block;
+    padding: 0 0 0 0.75em;
+    margin: 0 0 0 0.75em; }
+    ul.menu li:first-child {
+      border-left: 0;
+      margin-left: 0;
+      padding-left: 0; }
 
-ul.actions li {
-  display: inline-block;
-  padding: 0 0 0 0.25em;
-  margin: 0 0 0 0.25em; }
-  ul.actions li:first-child {
-    margin-left: 0;
-    padding-left: 0; }
-
-ul.menu li {
-  border-left: solid 1px #e0e0e0;
-  display: inline-block;
-  padding: 0 0 0 0.75em;
-  margin: 0 0 0 0.75em; }
-  ul.menu li:first-child {
-    border-left: 0;
-    margin-left: 0;
-    padding-left: 0; }
-
-ol.default {
+ol {
   margin-left: 2.5em;
   list-style: decimal;
   padding-left: 1.25em; }
-  ol.default li {
+  ol li {
     padding-left: 0.25em; }
 
 /* Box */
@@ -1366,8 +1364,6 @@ ol.default {
     font-size: 3.5em;
     margin: 0.1em 0 0.35em 0; }
   #banner p {
-    font-size: 2.75em;
-    line-height: 1.35em;
     margin: 0; }
   #banner .button {
     width: 100%;
@@ -1774,7 +1770,10 @@ ol.default {
 .ptqsh {
   font-family: monospace;
   display: inline-block;
-  line-height: 1.5em; }
+  line-height: 1.5em;
+  border: 1px solid #ccc;
+  padding: 1em;
+  margin: 1em 0; }
 
 .ptqsh-bnf .ptq-LT, .ptqsh-bnf .ptq-RT, .ptqsh-bnf .ptq-IDE {
   color: #00009b; }
@@ -1831,3 +1830,13 @@ ol.default {
 
 .ptqsh-scanner .ptq-_ERROR_ {
   background: #e10000; }
+
+.markdown h3 {
+  margin-top: 2em; }
+
+.markdown code {
+  background: #ddd;
+  border: 1px solid #eee;
+  padding: .2em .5em; }
+  .markdown code.ptqsh {
+    background: #fff; }

@@ -1,1 +1,127 @@
-<!DOCTYPE html><html><head><title>ptq-js by alessioscalici</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/prism.css"><link rel="stylesheet" href="assets/css/jquery.qtip.min.css"><link rel="stylesheet" href="assets/css/main.css"></head><body class="homepage"><div id="page-wrapper"><div id="header-wrapper"><header class="container"><div id="logo"><h1><img src="assets/images/logo.png"><a href="index.html">Ptq</a></h1><span>the Ptq scanner / parser generator</span></div><nav id="nav"><ul><li><a href="https://github.com/alessioscalici/ptq-js/"><span class="icon fa-github"></span><span>GitHub Repo</span></a><a href="#overview-section">Overview</a></li></ul></nav></header></div><div id="banner-wrapper"><div id="banner" class="box container"><div id="overview-section" class="row"><div class="12u"><article><h3>Overview</h3><span>Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.</span><br><span>It is designed to be:</span><ul class="default"><li><b>Cross-platform: </b><span>it's available as Windows installer and executable Jar file</span></li><li><b>Cross-language: </b><span>it saves parsers and scanners in files, no language-specific code is generated</span></li><li><b>Easy to learn: </b><span>it uses common regular expressions to describe parsers, and Backus-Naur Form for grammars</span></li><li><b>Unicode compliant: </b><span>the scanners can handle every Unicode character</span></li><li><b>Fast: </b><span>it uses LALR(1) parsing algorithm by default</span></li></ul><br><span>The typical workflow is:</span><ol class="default"><li>Create a new project</li><li>Define the scanner (and eventually the grammar)</li><li>Compile the project and generate the output file</li><li>Include the language-specific library in your project</li><li>Deserialize the output using the library to obtain the parser object</li></ol></article><article><h3>First steps</h3><ul class="default"><li>Create a new project: click File > New project and insert the name of your project. Ptq will create a sample parser recognizing simple mathematical expressions</li><li>Compile the project clicking Project > Compile</li><li>Open the project tree, then open the Test folder: there's a sample test file called source.txt. Open it (double click).</li></ul><div>If the last compilation was successful, when you open a test file the editor switches to the Test perspective.</div><div>In the Test perspective you can:<ul class="default"><li>Edit the text in the editor and save the file (File > Save all or CTRL+S)</li><li>Double click on the text in the editor to see token informations in the Properties panel</li><li>Click on a symbol name in the Terminal panel to highlight tokens in the editor</li><li>Click on a rule in the Rules panel to highlight rules in the editor</li><li><b>Only for parser projects:</b><ul><li>Click on the "play" symbol in the top-right corner of the editor to see the parse tree in the Parse tree panel, or an error message in the Warning panel</li><li>If the text isn't recognized, an error message appears in the Warning panel. Click on the error message in the Warning panel to highlight the row in the editor</li><li>Click on a node in the Parse tree panel to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)</li></ul></li></ul></div></article><article><h3>Command line</h3><h4>Interactive mode:</h4><div>Execute Ptq in interactive mode passing the option -i:<div class="cmd">path/to/ptq/ptq.jar -i</div></div><div class="cli-command"><div class="cmd">{exit | quit}</div><div class="desc">Prints the current application language</div></div><h4>Projects:</h4><div class="cli-command"><div class="cmd">create { scanner | parser } < PROJECT_NAME ></div><div class="args"><div class="arg-name">{ scanner | parser}</div><div class="arg-desc">The project type</div></div><div class="args"><div class="arg-name">PROJECT_NAME</div><div class="arg-desc">The project name. It must contain only numbers, letters and underscores, and must begin with a letter or an underscore</div></div><div class="desc">Creates a new project in the current projects directory</div></div><div class="cli-command"><div class="cmd">compile < PROJECT_NAME ></div><div class="args"><div class="arg-name">PROJECT_NAME</div><div class="arg-desc">A project name. The project must exists under the current Projects directory</div></div><div class="desc">Compiles the project, generating the output scanner/parser file</div></div><div class="cli-command"><div class="cmd">hex < PROJECT_NAME ></div><div class="args"><div class="arg-name">PROJECT_NAME</div><div class="arg-desc">A project name. The project must exists under the current Projects directory and must be successfully compiled first</div></div><div class="desc">Gets the output in hexadecimal string format</div></div><h4>Settings:</h4><div class="cli-command"><div class="cmd">set { language | lang } < LANGUAGE ></div><div class="args"><div class="arg-name">LANGUAGE</div><div class="arg-desc">The application language to set, e.g. it (Italian), en (English)</div></div><div class="desc">Sets the application language</div></div><div class="cli-command"><div class="cmd">set root < PATH ></div><div class="args"><div class="arg-name">PATH</div><div class="arg-desc">The path to the new projects directory</div></div><div class="desc">Sets the projects directory</div></div><h4>Info:</h4><div class="cli-command"><div class="cmd">{echo | print} {language | lang}</div><div class="desc">Prints the current application language</div></div><div class="cli-command"><div class="cmd">{echo | print} root</div><div class="desc">Prints the current path of the projects directory</div></div><div class="cli-command"><div class="cmd">{echo | print} project-list</div><div class="desc">Prints the list of project names in the current projects directory</div></div><div class="cli-command"><div class="cmd">{echo | print} charset-list</div><div class="desc">Prints the list of available charset (the result is platform dependent)</div></div><div class="cli-command"><div class="cmd">{echo | print} version</div><div class="desc">Prints the application version number</div></div></article></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="assets/apps/ptq.jar" title="Ptq download">Download Ptq 2.0.1</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/main.js"></script><script src="assets/js/prism.js"></script><script src="assets/js/jquery.qtip.min.js"></script><script src="assets/js/ptq/ptq.js"></script><script src="assets/js/demo.js"></script></body></html>
+<!DOCTYPE html><html><head><title>ptq-js by alessioscalici</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/prism.css"><link rel="stylesheet" href="assets/css/jquery.qtip.min.css"><link rel="stylesheet" href="assets/css/main.css"></head><body class="homepage"><div id="page-wrapper"><div id="header-wrapper"><header class="container"><div id="logo"><h1><img src="assets/images/logo.png"><a href="index.html">Ptq</a></h1><span>the Ptq scanner / parser generator</span></div><nav id="nav"><ul><li><a href="https://github.com/alessioscalici/ptq-js/"><span class="icon fa-github"></span><span>GitHub Repo</span></a><a href="#overview-section">Overview</a></li></ul></nav></header></div><div id="banner-wrapper"><div id="banner" class="box container"><div id="overview-section" class="row"><div class="12u markdown"><h3>Overview</h3><a name="overview-section"></a><p>Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.</p>
+
+<p>It is designed to be:</p>
+
+<ul><li><strong>Cross-platform</strong>: it&#39;s available as Windows installer and executable Jar file</li><li><strong>Cross-language</strong>: it saves parsers and scanners in files, no language-specific code is generated</li><li><strong>Easy to learn</strong>: it uses common regular expressions to describe parsers, and Backus-Naur Form for grammars</li><li><strong>Unicode compliant</strong>: the scanners can handle every Unicode character
+Fast: it uses LALR(1) parsing algorithm by default</li></ul><h3>First steps</h3><a name="first-steps-section"></a><ul><li>Create a new project: click <code>File &gt; New project</code> and insert the name of your project. Ptq will create a sample parser recognizing simple mathematical expressions</li><li>Compile the project clicking <code>Project &gt; Compile</code></li><li>Open the project tree, then open the Test folder: there&#39;s a sample test file called <em>source.txt</em>. Open it (double click).</li></ul>
+
+<p>If the last compilation was successful, when you open a test file the editor switches to the <strong>Test perspective</strong>.</p>
+
+<p>In the Test perspective you can:</p>
+
+<ul><li>Edit the text in the <strong>editor</strong> and save the file (File &gt; Save all or CTRL+S)</li><li>Double click on the text in the editor to see token informations in the <strong>Properties panel</strong></li><li>Click on a symbol name in the <strong>Terminal panel</strong> to highlight tokens in the editor</li><li>Click on a rule in the <strong>Rules panel</strong> to highlight rules in the editor</li></ul>
+
+<p><strong>Only for parser projects:</strong></p>
+
+<ul><li>Click on the &quot;play&quot; symbol in the top-right corner of the editor to see the parse tree in the <strong>Parse tree panel</strong>, or an error message in the Warning panel</li><li>If the text isn&#39;t recognized, an error message appears in the <strong>Warning panel</strong>. Click on the error message in the Warning panel to highlight the row in the editor</li><li>Click on a node in the <strong>Parse tree panel</strong> to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)</li></ul><h3>Command line</h3><a name="command-line-section"></a><h5>Start interactive mode</h5>
+
+<p>Execute Ptq in interactive mode passing the option -i:</p>
+
+<p><code>
+path/to/ptq/ptq.jar -i
+</code></p>
+
+<h5>Exit interactive mode:</h5>
+
+<p><code>
+exit    # or &quot;quit&quot;
+</code></p>
+
+<h5>Create a new project in the current projects directory</h5>
+
+<p><code>
+create PROJECT_TYPE PROJECT_NAME
+</code></p>
+
+<ul><li>PROJECT_TYPE: <code>scanner</code> or <code>parser</code></li><li>PROJECT_NAME: The project name. It must contain only numbers, letters and underscores, and must begin with a letter or an underscore</li></ul>
+
+<h5>Compile the project, generating the output scanner/parser file</h5>
+
+<p><code>
+compile PROJECT_NAME
+</code></p>
+
+<ul><li>PROJECT_NAME: A project name. The project must exists under the current Projects directory</li></ul>
+
+<h5>Get the output in hexadecimal string format</h5>
+
+<p><code>
+hex PROJECT_NAME
+</code></p>
+
+<ul><li>PROJECT_NAME: A project name. The project must exists under the current Projects directory and must be successfully compiled first</li></ul>
+
+<h5>Set the application language</h5>
+
+<p><code>
+set language LANGUAGE    # or &quot;set lang LANGUAGE&quot;
+</code></p>
+
+<ul><li>LANGUAGE: the application language to set, possible values are <code>it</code> (Italian), <code>en</code> (English)</li></ul>
+
+<h5>Set the projects directory</h5>
+
+<p><code>
+set root PATH
+</code></p>
+
+<ul><li>PATH: the path to the new projects directory</li></ul>
+
+<h5>Print informations</h5>
+
+<p>Use the <code>echo</code> (alias: <code>print</code>) command to print informations:</p>
+
+<ul><li><code>echo language</code> (or <code>print lang</code>): get the current application language</li><li><code>echo root</code>: get the current path of the projects directory</li><li><code>echo project-list</code>: get the list of project names in the current projects directory</li><li><code>echo charset-list</code>: get the list of available charset (the result is platform dependent)</li><li><code>echo version</code>: get the application version number</li></ul><h3>Conflicts</h3><a name="conflicts-section"></a><h4>Shift/Reduce conflicts (S/R)</h4>
+
+<p>When a grammar allows a rule to be reduced for a certain token, but allows another rule to be shifted, there&#39;s a Shift/Reduce conflict. When that token is recognized, the parsing algorithm cannot decide between shifting a rule or reducing the other.
+Here is an example:</p><pre><code class="ptqsh ptqsh-bnf">< if_statement > ::= if < condition > then < statement_list >
+
+< if_statement > ::= if < condition > then < statement_list > else < statement_list >
+</code></pre><p>The above rules describe a common if-then-else statement. This grammar is ambiguous, because when the &quot;else&quot; terminal is recognized, the parser can take two actions:</p>
+
+<ol><li>Reduce the first rule</li><li>Shift the second rule</li></ol>
+
+<p>Possible solutions are:</p>
+
+<ul><li>Using the &quot;Shift on S/R conflicts&quot; option (always selected by default). When a S/R conflict occurs, the parser generator will always choose to shift. This is a very common behaviour for LR1 parser generators</li><li>Modifying the language: in the above example, you can add an &quot;end if&quot; token to terminate the if-then-else statement:</li></ul><pre><code class="ptqsh ptqsh-bnf">< if_statement > ::= if < condition > then < statement_list > end_if
+
+< if_statement > ::= if < condition > then < statement_list > else < statement_list > end_if
+
+</code></pre><h4>Reduce/Reduce conflicts (R/R)</h4>
+
+<p>A Reduce/Reduce conflict occurs if there are two or more rules that apply to the same sequence of input, so the grammar allows more than one rule to be reduced for a certain token. When that token is recognized, the parsing algorithm cannot decide which of the two rules has to be reduced.</p>
+
+<p>Usually a R/R conflict indicates a serious problem in the grammar. Usually you can resolve such kind of conflict modifying the grammar.</p>
+
+<h4>LALR(1) conflicts</h4>
+
+<p>Because of the way LALR(1) action-goto tables are built, some LR(1) grammars cannot be parsed using LALR(1) algorithm. If you try to generate LALR(1) tables for these grammars, you&#39;ll get a R/R conflict.</p>
+
+<p>If this is the case, the easiest solution is to use the canonical LR1 algorithm or its reduced variant.</p><h3>Scanners</h3><a name="conflicts-section"></a><p>The scanner is the module that performs lexical analisys.
+It takes in input a sequence of characters, and returns a sequence of tokens.</p>
+
+<p>Consider the following Javascript statement:</p>
+
+<p><code>var iNumber = 6;</code></p>
+
+<p>The lexical analisys would return the following tokens (ignoring whitespace):</p>
+
+<ol><li><code>var</code>: the var keyword</li><li><code>iNumber</code>: the variable identifier</li><li><code>=</code>: the assignment operator</li><li><code>6</code>: an integer literal</li><li><code>;</code>: semicolumn</li></ol>
+
+<p>Here is a scanner for the example above, declared using Ptq scanner language:</p><pre><code class="ptqsh ptqsh-scanner">--------------------------------------------------------------------------
+myScanner
+
+  whitespace   / [:space:] + / -ignore
+
+  var_keyword  / var /
+  identifier   / [a-zA-Z_] [a-zA-Z_0-9]* /
+  equals_op    / = /
+  integer      / [0-9] + /
+  semicolon    / ; /
+</code></pre><p>Every subscanner begins with two or more Hyphen (-) characters followed by an identifier (the subscanner name), and optionally some subscanner property.</p>
+
+<p>The subscanner definition contains the patterns to be recognized (terminals). Every terminal is declared specifying a name and a pattern, and optionally some terminal property (in the above example, the &quot;whitespace&quot; terminal has the property <strong>-ignore</strong>, that causes the token to be skipped when recognized).</p>
+
+<h1>TO BE CONTINUED ...</h1>
+
+<p>(at the moment you can visit <a href="http://alessioscalici.it/ptq/reference.html">the old ugly version</a>)</p></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="assets/apps/ptq.jar" title="Ptq download">Download Ptq 2.0.1</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/main.js"></script><script src="assets/js/prism.js"></script><script src="assets/js/jquery.qtip.min.js"></script><script src="assets/js/ptq/ptq.js"></script><script src="assets/js/ptq-sh.js"></script></body></html>
