@@ -231,8 +231,84 @@ html
 
                 The subscanner definition contains the patterns to be recognized (terminals). Every terminal is declared specifying a name and a pattern, and optionally some terminal property (in the above example, the "whitespace" terminal has the property **-ignore**, that causes the token to be skipped when recognized).
 
+
+
+                #### Switching between subscanners
+                The  ```-goto foo``` property means "when this pattern is matched, start using the foo scanner".
+                Here is an example: the following scanner recognizes the common C comment block (  /\*  ...  \*/  )
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -------------------------------------------------------
+                  main
+
+                      text            / \* | \/ | [ [:ascii:] -[ /* ]] * /
+                      comment_start   / \/ \* /     -goto comment_block  -ignore
+
+                  -------------------------------------------------------
+                  comment_block
+
+                      comment_body    / \* | \/ | [ [:ascii:] -[ /* ]] * /  -ignore
+                      comment_end     / \* \/ /     -goto main -ignore
+
+
+              :markdown
+                After the ```comment_start``` terminal is matched, ```comment_block``` becomes the current subscanner.
+                When ```comment_end``` is matched, ```main``` becomes the current subscanner.
+
+                Here is a sample input text:
+
+                ```
+                if (a > b) {
+                  /* in this comment, nesting is not supported */
+                  a = 0;
+                }
+                ```
+
+                Here's what happens:
+
+                1. At input start, the first subscanner (main) is executed.
+                1. After the first **/\*** ( ```{main.comment_start}``` ), comment_block becomes the current subscanner.
+                1. After the first **\*/**  ( ```{comment_block.comment_end}``` ) main becomes the current subscanner.
+
+
+
+                #### Nested blocks
+                Nested blocks can be implemented using the ```-start```  and ```-stop``` properties to switch between subscanners.
+
+                Here is an example: the following scanner recognizes a nested comment block
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -------------------------------------------------------
+                  main
+
+                    text          / \* | \/ | [[:ascii:]-[/*]] * /
+                    comment_start / \/ \* /     -start comment_block -ignore
+
+                  -------------------------------------------------------
+                  comment_block
+
+                    comment_body  / \* | \/ | [[:ascii:]-[/*]] * / -ignore
+                    comment_start / \/ \* /      -start comment_block -ignore
+                    comment_stop  / \* \/ /      -stop -ignore
+
+              :markdown
+
+                - The **-start** property means "when the scanner matches this pattern, start using the comment_block subscanner"
+                - The **-stop** property means "when this pattern is matched, restore the previous subscanner"
+
+                Here is a sample input text:
+
+
+
+
+
+                
                 # TO BE CONTINUED ...
                 (at the moment you can visit [the old ugly version](http://alessioscalici.it/ptq/reference.html))
+
+
 
 
       #footer-wrapper

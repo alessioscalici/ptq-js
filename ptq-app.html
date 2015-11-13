@@ -122,6 +122,53 @@ myScanner
 
 <p>The subscanner definition contains the patterns to be recognized (terminals). Every terminal is declared specifying a name and a pattern, and optionally some terminal property (in the above example, the &quot;whitespace&quot; terminal has the property <strong>-ignore</strong>, that causes the token to be skipped when recognized).</p>
 
-<h1>TO BE CONTINUED ...</h1>
+<h4>Switching between subscanners</h4>
+
+<p>The  <code>-goto foo</code> property means &quot;when this pattern is matched, start using the foo scanner&quot;.
+Here is an example: the following scanner recognizes the common C comment block (  /*  ...  */  )</p><pre><code class="ptqsh ptqsh-scanner">-------------------------------------------------------
+main
+
+    text            / \* | \/ | [ [:ascii:] -[ /* ]] * /
+    comment_start   / \/ \* /     -goto comment_block  -ignore
+
+-------------------------------------------------------
+comment_block
+
+    comment_body    / \* | \/ | [ [:ascii:] -[ /* ]] * /  -ignore
+    comment_end     / \* \/ /     -goto main -ignore
+
+</code></pre><p>After the <code>comment_start</code> terminal is matched, <code>comment_block</code> becomes the current subscanner.
+When <code>comment_end</code> is matched, <code>main</code> becomes the current subscanner.</p>
+
+<p>Here is a sample input text:</p>
+
+<p><code>
+if (a &gt; b) {
+  /* in this comment, nesting is not supported */
+  a = 0;
+}
+</code></p>
+
+<p>Here&#39;s what happens:</p>
+
+<ol><li>At input start, the first subscanner (main) is executed.</li><li>After the first <strong>/*</strong> ( <code>{main.comment_start}</code> ), comment_block becomes the current subscanner.</li><li>After the first <strong>*/</strong>  ( <code>{comment_block.comment_end}</code> ) main becomes the current subscanner.</li></ol>
+
+<h4>Nested blocks</h4>
+
+<p>Nested blocks can be implemented using the <code>-start</code>  and <code>-stop</code> properties to switch between subscanners.</p>
+
+<p>Here is an example: the following scanner recognizes a nested comment block</p><pre><code class="ptqsh ptqsh-scanner">-------------------------------------------------------
+main
+
+  text          / \* | \/ | [[:ascii:]-[/*]] * /
+  comment_start / \/ \* /     -start comment_block -ignore
+
+-------------------------------------------------------
+comment_block
+
+  comment_body  / \* | \/ | [[:ascii:]-[/*]] * / -ignore
+  comment_start / \/ \* /      -start comment_block -ignore
+  comment_stop  / \* \/ /      -stop -ignore
+</code></pre><h1>TO BE CONTINUED ...</h1>
 
 <p>(at the moment you can visit <a href="http://alessioscalici.it/ptq/reference.html">the old ugly version</a>)</p></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="assets/apps/ptq.jar" title="Ptq download">Download Ptq 2.0.1</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/main.js"></script><script src="assets/js/prism.js"></script><script src="assets/js/jquery.qtip.min.js"></script><script src="assets/js/ptq/ptq.js"></script><script src="assets/js/ptq-sh.js"></script></body></html>

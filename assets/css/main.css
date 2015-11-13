@@ -1835,6 +1835,7 @@ ol {
   margin-top: 2em; }
 
 .markdown code {
+  white-space: pre;
   background: #ddd;
   border: 1px solid #eee;
   padding: .2em .5em; }
