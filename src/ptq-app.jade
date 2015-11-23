@@ -23,8 +23,11 @@ html
                   span.icon.fa-github
                   span GitHub Repo
                 a(href='#overview-section') Overview
-
-
+                a(href='#command-line-section') Command line
+                a(href='#conflicts-section') Conflicts
+                a(href='#scanners-section') Scanners
+                a(href='#grammars-section') Grammars
+                a(href='#templates-section') Templates
 
 
 
@@ -33,6 +36,9 @@ html
           .row#overview-section
             .12u.markdown
 
+
+
+              //- ================================== OVERVIEW ================================== //
 
               :markdown
                 ### Overview
@@ -48,6 +54,10 @@ html
                 - **Unicode compliant**: the scanners can handle every Unicode character
                 Fast: it uses LALR(1) parsing algorithm by default
 
+
+
+
+              //- ================================== FIRST STEPS ================================== //
 
               :markdown
                 ### First steps
@@ -73,6 +83,10 @@ html
                 - If the text isn't recognized, an error message appears in the **Warning panel**. Click on the error message in the Warning panel to highlight the row in the editor
                 - Click on a node in the **Parse tree panel** to highlight the corresponding text in the editor, and to see informations in the Properties panel (only for parser projects)
 
+
+
+
+              //- ================================== COMMAND LINE ================================== //
 
               :markdown
                 ### Command line
@@ -142,6 +156,10 @@ html
                 - ```echo version```: get the application version number
 
 
+
+
+              //- ================================== CONFLICTS ================================== //
+
               :markdown
                 ### Conflicts
               a(name="conflicts-section")
@@ -191,9 +209,13 @@ html
 
 
 
+
+
+              //- ================================== SCANNERS ================================== //
+
               :markdown
                 ### Scanners
-              a(name="conflicts-section")
+              a(name="scanners-section")
 
               :markdown
                 The scanner is the module that performs lexical analisys.
@@ -294,20 +316,507 @@ html
                     comment_stop  / \* \/ /      -stop -ignore
 
               :markdown
-
                 - The **-start** property means "when the scanner matches this pattern, start using the comment_block subscanner"
                 - The **-stop** property means "when this pattern is matched, restore the previous subscanner"
 
                 Here is a sample input text:
 
 
+                ![Nested blocks example](/assets/images/nested_blocks1.png "Nested blocks example")
 
 
 
-                
-                # TO BE CONTINUED ...
-                (at the moment you can visit [the old ugly version](http://alessioscalici.it/ptq/reference.html))
+                1. At input start, the first subscanner (main) is executed.
+                1. After the first /* ( **{ main.comment\_start }**), an instance of the comment\_block subscanner starts.
+                1. After the second /* ( **{ comment\_block.comment_start }** ), another instance of the comment\_block subscanner starts.
+                1. After the first */  ( **{ comment\_block.comment_stop }** ) the previous subscanner (the first instance of comment\_block) is restored.
+                1. After the second */  ( **{ comment\_block.comment_stop }** ) the previous subscanner (the main subscanner) is restored.
 
+
+
+
+                #### Pushback
+
+
+
+                The **-pushback** property is always combined with **-start** or **-goto**. It means "when this pattern is matched, push back the token characters to the input text". In other words, the incoming subscanner will read those characters, even if they were already scanned.
+
+                The following scanner recognizes a free ascii text. When a  <  is found, it ignores it (**-ignore** property) and gives the < character to the incoming subscanner (**-goto tag_sub**), that recognizes a sequence of XML-like tags.
+
+
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -------------------------------------------------------
+                  main_sub
+
+                      free_text / [[:ascii:]-[<]] /
+                      tag_start / < / -goto tag_sub -pushback -ignore
+
+                  -------------------------------------------------------
+                  tag_sub
+
+                      tag / < [a-z] + > /
+                      tag_with_ns / < [a-z]+ : [a-z]+ > /
+
+
+
+              :markdown
+                A sample input (the bold part is recognized by the **tag_sub** subscanner):
+
+                > This is free ascii text  **<sequence><of><xml:like><tags>**
+
+                The first ```<``` character is recognized as **{ main\_sub.tag_start }**, it is pushed back to the input stream (**-pushback** property)
+                and recognized again as the first character of **{ tag_sub.tag }**
+
+
+
+
+              //- ================================== CHARACTER SETS ================================== //
+
+              :markdown
+                ### Character sets
+              a(name="character-sets-section")
+
+              :markdown
+                When you have to match only one character out of several characters, you need to define a character set. To define a character set, put the characters you want to match into square brackets:
+
+                > **[AB]** _matches_ ```A``` or ```B```
+
+
+
+                #### Metacharacters
+
+                The usual metacharacters are normal characters inside a character set, so they don't need to be escaped. The only metacharacters in character sets are:
+
+                - ```[``` _left square bracket_ (begin of the character set)
+                - ```]``` _right square bracket_ (end of the character set)
+                - ```-``` _hyphen_ (range operator)
+
+
+
+                > **[A-D]** _matches_ ```A``` , ```B``` , ```C``` or ```D``` because the ```-``` (range operator) is not escaped
+
+                > **[A\-D]** _matches_ ```A``` , ```-``` or ```D``` because the ```-``` is escaped
+
+                > **[\[\]]** _matches_ ```[``` or ```]``` because the brackets characters (into the character set) are escaped
+
+
+
+                #### Whitespaces
+
+                In a character set, whitespaces are considered as normal characters:
+
+                > **[ ]** _matches_ ``` ``` (whitespace)
+
+                > **[A B]** _matches_ ```A```, ```B``` or ``` ``` (whitespace)
+
+
+
+
+
+                #### Ranges
+
+                An hyphen ```-``` between two characters defines a range of characters:
+
+
+                > **[A-D]** _matches_ ```A``` , ```B``` , ```C``` or ```D```
+
+                > **[0-9]** _matches_ all digits from ```0``` to ```9```
+
+                > **[A-\u45]** _matches_ all uppercase letters from ```A``` to ```E``` (U+0045)
+
+                > **[0\-9]** _matches_ ```0``` or ```9``` (the ```-``` is escaped)
+
+
+
+
+                #### Pre-defined character sets
+
+
+                ##### POSIX character classes
+
+                > ```[:alnum:]``` _matches_ all alphanumeric characters (equiv. ```[a-zA-Z0-9]```)
+
+                > ```[:alpha:]``` _matches_ all letters (equiv. ```[a-zA-Z]```)
+
+                > ```[:ascii:]``` _matches_ all ASCII characters (equiv. ```[\u00-\u7F]```)
+
+
+
+
+                > ```[:blank:]``` _matches_ Space and tab (equiv. ```[ \t]```)
+
+                > ```[:cntrl:]``` _matches_ all Control characters (equiv. ```[\u00-\u1F\u7F]```)
+
+                > ```[:digit:]``` (```\d```) _matches_ all Digits (equiv. ```[0-9]```)
+
+                > ```[:graph:]``` _matches_ all ASCII characters (equiv. ```[\u00-\u7F]```)
+
+                > ```[:lower:]``` _matches_ all Lowercase letters (equiv. ```[a-z]```)
+
+                > ```[:print:]``` _matches_ all Visible characters and spaces (anything but control characters) (equiv. ```[\u20-\u7E]```)
+
+                > ```[:punct:]``` _matches_ all Punctuation and symbols (equiv. ```[!"#$%&'()*+,\-./:;<=>?@\[\\\]^_`{|}~]```)
+
+                > ```[:space:]``` (```\s```) _matches_ all whitespace characters, including line breaks (equiv. ```[ \t\r\n\v\f]```)
+
+                > ```[:upper:]``` _matches_ all Uppercase letters (equiv. ```[A-Z]```)
+
+                > ```[:word:]``` (```\w```) _matches_ all Word characters (letters, numbers and underscores) (equiv. ```[a-zA-Z0-9_]```)
+
+                > ```[:xdigit:]``` _matches_ all Hexadecimal digits (equiv. ```[a-fA-F0-9]```)
+
+
+
+
+
+
+                ##### Unicode Scripts
+
+
+                You can refer to [Unicode Scripts](http://en.wikipedia.org/wiki/Script_\(Unicode\)) using their name, with the following syntax:
+
+                **\p{**SCRIPT_NAME**}**
+
+                For example:
+
+                > ```\p{Latin}``` _matches_ all the characters in the "Latin" Unicode Script
+
+
+
+                ##### Unicode Blocks
+
+
+                You can refer to [Unicode Blocks](http://en.wikipedia.org/wiki/Unicode_block) using their name, with the following syntax:
+
+                **\p{In**SCRIPT_NAME**}**
+
+                For example:
+
+                > ```\p{InCyrillic}``` _matches_ all the characters in the "Cyrillic" Unicode Block
+
+
+
+                ##### Unicode Categories
+
+
+                You can match characters that are part of a Unicode Category using the category name, with the following syntax:
+
+                **\p{Is**CATEGORY_NAME**}**
+
+                For example:
+
+                > ```\p{InUppercase}``` _matches_ all the characters in the "Uppercase" Unicode Category
+
+
+
+
+
+
+                #### Custom character classes
+
+
+                If you use the same character set more than one time, you can define it once and reference it multiple times with his name:
+
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+
+                  // Define here your custom character sets
+                  // Syntax:   NAME [ ...character set definition... ]
+
+                  MyCharacterSet [#';]
+
+                  -- myScanner
+                      MY_TERMINAL    / {MyCharacterSet} /     // <-- matches  "#", "'" or ";"
+                      MY_TERMINAL_2  / {MyCharacterSet} A  /  // <-- matches  "#A", "'A" or ";A"
+
+
+              :markdown
+                then, you can refer to the character set in your patterns using the syntax ```{CHARACTER_SET_NAME}```
+
+
+
+
+
+              //- ================================== PROPERTIES ================================== //
+
+              :markdown
+                ### Properties
+              a(name="properties-section")
+
+              :markdown
+                Properties are settings applicable to the global scanner, the subscanners and the terminals to
+                modify the scanner behavior.
+
+
+                #### Scanner properties
+
+                ```-eos-symbol <name>``` defines a custom name for the "end of stream" symbol (default: _EOS_)
+
+                ```-error-symbol <name>``` defines a custom name for the "error" symbol (default: _ERROR_)
+
+                ```-begin-symbol <name>``` defines a custom name for the "begin block" symbol (default: _BEGIN_)
+
+                ```-end-symbol <name>``` defines a custom name for the "end block" symbol (default: _END_)
+
+
+                #### Sub-scanner properties
+
+                ```-fix-priority <integer>``` The priority for every static-length terminal (e.g. keywords, operators, parentheses)
+
+                ```-var-priority <integer>``` The priority for every variable-length terminal (e.g. identifiers, literal numbers, literal strings)
+
+
+                #### Terminal properties
+
+                ```-ignore``` Ignore this token when matched
+
+                ```-goto <subscanner name>``` Start using another subscanner after match
+
+                ```-start <subscanner name>``` Start using another subscanner after match. When a terminal with the **-stop** option is matched, the previous subscanner is restored
+
+                ```-stop``` Restores the previous subscanner after match
+
+                ```-pushback``` When **-start** or **-goto** are triggered, the current token string is pushed back into the input stream, so that the starting subscanner can read it again
+
+                ```-priority <integer>``` When two terminals can match the same word, you can give an higher (or lower) priority to one of them
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -- myScanner
+
+                      WORD    / [a-z]+ /
+                      FOR     / for  /
+
+
+              :markdown
+                Here, the word "for" can be matched by both the terminals. Setting an higher priority to FOR will resolve the conflict, matching FOR only when the word "for" is matched, and WORD in every other case:
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -- myScanner
+
+                      WORD    / [a-z]+ /    -priority 5
+                      FOR     / for  /      -priority 3
+
+              :markdown
+                ```-indent``` In indentation-based scanners, use this property to indicate the "indentation" terminal, whose lenght determines the indentation level. This property is usually used together with the **-ignore** property. You should never put newline characters in an **-indent** terminal.
+
+              pre
+                code.ptqsh.ptqsh-scanner.
+                  -- myScanner
+
+                      INDENT     /  [ \t]+  /   -indent -ignore
+                      NEWLINE    /  \n   /
+
+
+
+
+              //- ================================== GRAMMARS ================================== //
+
+              :markdown
+                ### Grammars
+              a(name="grammars-section")
+
+              :markdown
+                Ptq uses **BNF (Backus-Naur Form)** to define grammars, a very common notation for grammar specifications. This format is easy to understand and quick to learn.
+                The BNF meta-symbols are:
+
+                > ```::=``` **is defined as**: separates the rule's head from his handle
+
+                > ```|``` **or**: pipe indicates alternative handles
+
+                > ```< non_terminal_name >``` **non terminal symbol**: angle brackets surround Non-terminal symbol names
+
+                > ```terminal_name``` **terminal symbol**: any name not surrounded by angle brackets is a Terminal symbol
+
+
+                A BNF specification is a set of derivation rules, written in the following form:
+
+
+                ![Rule example](/assets/images/rule.png "Rule example")
+
+                Here is an example:
+
+
+              pre
+                code.ptqsh.ptqsh-bnf.
+                  < expression > ::= < expression_term >
+                  < expression > ::= < expression > plus < expression_term >
+                  < expression > ::= < expression > minus < expression_term >
+
+                  < expression_term > ::= integer
+                  < expression_term > ::= variable_name
+
+              :markdown
+                The above grammar can be written using the pipe ```|``` choice operator:
+
+
+              pre
+                code.ptqsh.ptqsh-bnf.
+                  < expression > ::= < expression_term >
+                    |  < expression > plus < expression_term >
+                    |  < expression > minus < expression_term >
+
+                  < expression_term > ::= integer | variable_name
+
+              :markdown
+                #### Terminal and Non-terminal symbols
+
+                In BNF specification there are two kinds of symbols: **Teminal** and **Non-terminal** symbols.
+
+                Terminal symbols represent the text recognized and tokenized by the scanner. In a parse tree, terminals are always leaves, and each of them represents a token. They are referenced in the grammar specification using their name (the identifier used in the scanner specification).
+
+                Terminal symbols have to be defined in the scanner specification as non-ignored terminals (they must be defined at least in one subscanner without the -ignore property), using their identifier.
+
+                Non-terminal symbols represent the rules used to derive the input text. In a parse tree, they are represented by non-terminal nodes. They are referenced using an identifier surrounded by angle brackets.
+
+                Non-terminal symbols have to be defined as head symbol for at least one rule. They can be referenced using their identifier surrounded by angle brackets ```<>```.
+
+
+
+
+              //- ================================== TEMPLATES ================================== //
+
+              :markdown
+                ### Templates
+              a(name="templates-section")
+
+              :markdown
+                Every symbol and every rule in the scanner/parser are identified by an index (32 bit integer).
+
+                Usually, a developer has to write a set of constants/enumeration to easily identify specific rules and symbols in the code, but this can be a really tedious task because:
+
+                1. A scanner/parser can have dozens (or hundreds!) of rules/symbols
+                1. Indexes may vary if a scanner/parser is modified
+                1. It's boring
+
+                To makes things easier, PTQ provides a template processing tool that allows automatic generation of this kind of code.
+                A template is a normal text file, coden in the targeted language, with some pre-processing tags. For example, the following template:
+
+
+
+
+              pre
+                code.lang-template.
+                  public enum #project name#Symbols
+                  {
+                      #foreach symbol#
+                      S_#name# = #index# %%,%%
+                      #end symbol#
+                  }
+
+
+              :markdown
+                Will result in a Java enum like the following:
+
+              pre
+                code.lang-template.
+                  public enum MyProjectSymbols
+                  { 
+                      S__EOS_ = 0,
+                      S__ERROR_ = 1,
+                      S_MY_FIRST_SYMBOL = 2,
+                      S_MY_SECOND_SYMBOL = 3,
+                      S_MY_THIRD_SYMBOL = 4
+                  }
+
+
+              :markdown
+                #### Tag list
+
+                ##### Global
+
+                ```#project name#``` The project name
+
+                ```#terminal count#``` The number of terminal symbols
+
+                ```#start symbol name#``` The grammar start symbol name
+
+                ```#start symbol index#``` The grammar start symbol index
+
+                ```#symbol count#``` The total number of symbols ( terminal + non-terminal )
+
+                ```#rule count#``` The number of  rules in the grammar
+
+
+                ##### List separator
+
+                ```%%``` In every list you can surround a list separator between **%%** (e.g.  ```%%,%%```). The separator will be omitted after the last occurrence in the list.
+
+
+                ##### Terminal list
+
+                ```#for each terminal#``` Starts the terminal symbol list. The code between this tag and **#end terminal#** will be repeated for each terminal symbol
+
+                ```#name#``` The terminal name (identifier)
+
+                ```#index#``` The terminal index
+
+                ```#display name#``` The terminal display name
+
+                ```#end terminal#``` Terminates the terminal symbol list
+
+
+                ##### Symbol list
+
+                ```#for each symbol#``` Starts the symbol list. The code between this tag and **#end symbol#** will be repeated for each symbol (terminal + non-terminal)
+
+                ```#name#``` The symbol name (identifier)
+
+                ```#index#``` The symbol index
+
+                ```#end symbol#``` Terminates the symbol list
+
+
+
+                ##### Rule list
+
+                ```#for each rule#``` Starts the rule list. The code between this tag and **#end rule#** will be repeated for each grammar rule
+
+                ```#rule#``` The grammar rule in BNF format (e.g.  ```<expr> ::= LPAR <expr> RPAR``` )
+
+                ```#rule index#``` The rule index
+
+                ```#rule identifier#``` A unique rule identifier, built using symbols name (e.g. ```expr_LPAR_expr_RPAR```), can be used to have an index-independent identifier for the rule
+
+                ```#rule md5#``` The MD5 digest string of the rule, can be used to have an index-independent identifier for the rule
+
+                ```#head name#``` The name of the head symbol (LHS)
+
+                ```#head index#``` The index of the head symbol (LHS)
+
+                ```#element count#``` The number of symbols in the rule's tail (RHS)
+
+                ```#for each element#``` Starts the rule tail list. The code between this tag and **#end element#** will be repeated for each symbol in the rule tail (RHS)
+
+                ```#name#``` The RHS symbol name
+
+                ```#index#``` The RHS symbol index
+
+                ```#end element#``` Terminates the rule tail list
+
+                ```#end rule#``` Terminates the rule list
+
+
+
+                ##### Non-terminal list
+
+                ```#for each nonterminal#``` Starts the non-terminal symbol list. The code between this tag and **#end nonterminal#** will be repeated for each non-terminal symbol
+
+                ```#name#``` The non-terminal symbol name (identifier)
+
+                ```#index#``` The non-terminal symbol index
+
+                ```#for each rule#``` Starts the rule list. The code between this tag and **#end rule#** will be repeated for each grammar rule with the current non-terminal symbol as his head (LHS)
+
+                _... see rule tags ..._
+
+                ```#end rule#``` Terminates the rule list
+
+                ```#end nonterminal#``` Terminates the non-terminal symbol list
 
 
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><title>ptq-js by alessioscalici</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/prism.css"><link rel="stylesheet" href="assets/css/jquery.qtip.min.css"><link rel="stylesheet" href="assets/css/main.css"></head><body class="homepage"><div id="page-wrapper"><div id="header-wrapper"><header class="container"><div id="logo"><h1><img src="assets/images/logo.png"><a href="index.html">Ptq</a></h1><span>the Ptq scanner / parser generator</span></div><nav id="nav"><ul><li><a href="https://github.com/alessioscalici/ptq-js/"><span class="icon fa-github"></span><span>GitHub Repo</span></a><a href="#overview-section">Overview</a></li></ul></nav></header></div><div id="banner-wrapper"><div id="banner" class="box container"><div id="overview-section" class="row"><div class="12u markdown"><h3>Overview</h3><a name="overview-section"></a><p>Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.</p>
+<!DOCTYPE html><html><head><title>ptq-js by alessioscalici</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="assets/css/prism.css"><link rel="stylesheet" href="assets/css/jquery.qtip.min.css"><link rel="stylesheet" href="assets/css/main.css"></head><body class="homepage"><div id="page-wrapper"><div id="header-wrapper"><header class="container"><div id="logo"><h1><img src="assets/images/logo.png"><a href="index.html">Ptq</a></h1><span>the Ptq scanner / parser generator</span></div><nav id="nav"><ul><li><a href="https://github.com/alessioscalici/ptq-js/"><span class="icon fa-github"></span><span>GitHub Repo</span></a><a href="#overview-section">Overview</a><a href="#command-line-section">Command line</a><a href="#conflicts-section">Conflicts</a><a href="#scanners-section">Scanners</a><a href="#grammars-section">Grammars</a><a href="#templates-section">Templates</a></li></ul></nav></header></div><div id="banner-wrapper"><div id="banner" class="box container"><div id="overview-section" class="row"><div class="12u markdown"><h3>Overview</h3><a name="overview-section"></a><p>Ptq is a parsing system that helps programmers to quickly develop parsers and scanners.</p>
 
 <p>It is designed to be:</p>
 
@@ -97,7 +97,7 @@ Here is an example:</p><pre><code class="ptqsh ptqsh-bnf">< if_statement > ::= i
 
 <p>Because of the way LALR(1) action-goto tables are built, some LR(1) grammars cannot be parsed using LALR(1) algorithm. If you try to generate LALR(1) tables for these grammars, you&#39;ll get a R/R conflict.</p>
 
-<p>If this is the case, the easiest solution is to use the canonical LR1 algorithm or its reduced variant.</p><h3>Scanners</h3><a name="conflicts-section"></a><p>The scanner is the module that performs lexical analisys.
+<p>If this is the case, the easiest solution is to use the canonical LR1 algorithm or its reduced variant.</p><h3>Scanners</h3><a name="scanners-section"></a><p>The scanner is the module that performs lexical analisys.
 It takes in input a sequence of characters, and returns a sequence of tokens.</p>
 
 <p>Consider the following Javascript statement:</p>
@@ -169,6 +169,289 @@ comment_block
   comment_body  / \* | \/ | [[:ascii:]-[/*]] * / -ignore
   comment_start / \/ \* /      -start comment_block -ignore
   comment_stop  / \* \/ /      -stop -ignore
-</code></pre><h1>TO BE CONTINUED ...</h1>
+</code></pre><ul><li>The <strong>-start</strong> property means &quot;when the scanner matches this pattern, start using the comment_block subscanner&quot;</li><li>The <strong>-stop</strong> property means &quot;when this pattern is matched, restore the previous subscanner&quot;</li></ul>
 
-<p>(at the moment you can visit <a href="http://alessioscalici.it/ptq/reference.html">the old ugly version</a>)</p></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="assets/apps/ptq.jar" title="Ptq download">Download Ptq 2.0.1</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/main.js"></script><script src="assets/js/prism.js"></script><script src="assets/js/jquery.qtip.min.js"></script><script src="assets/js/ptq/ptq.js"></script><script src="assets/js/ptq-sh.js"></script></body></html>
+<p>Here is a sample input text:</p>
+
+<p><img alt="Nested blocks example" title="Nested blocks example" src="/assets/images/nested_blocks1.png"/></p>
+
+<ol><li>At input start, the first subscanner (main) is executed.</li><li>After the first /* ( <strong>{ main.comment_start }</strong>), an instance of the comment_block subscanner starts.</li><li>After the second /* ( <strong>{ comment_block.comment_start }</strong> ), another instance of the comment_block subscanner starts.</li><li>After the first */  ( <strong>{ comment_block.comment_stop }</strong> ) the previous subscanner (the first instance of comment_block) is restored.</li><li>After the second */  ( <strong>{ comment_block.comment_stop }</strong> ) the previous subscanner (the main subscanner) is restored.</li></ol>
+
+<h4>Pushback</h4>
+
+<p>The <strong>-pushback</strong> property is always combined with <strong>-start</strong> or <strong>-goto</strong>. It means &quot;when this pattern is matched, push back the token characters to the input text&quot;. In other words, the incoming subscanner will read those characters, even if they were already scanned.</p>
+
+<p>The following scanner recognizes a free ascii text. When a  &lt;  is found, it ignores it (<strong>-ignore</strong> property) and gives the &lt; character to the incoming subscanner (<strong>-goto tag_sub</strong>), that recognizes a sequence of XML-like tags.</p><pre><code class="ptqsh ptqsh-scanner">-------------------------------------------------------
+main_sub
+
+    free_text / [[:ascii:]-[<]] /
+    tag_start / < / -goto tag_sub -pushback -ignore
+
+-------------------------------------------------------
+tag_sub
+
+    tag / < [a-z] + > /
+    tag_with_ns / < [a-z]+ : [a-z]+ > /
+
+
+</code></pre><p>A sample input (the bold part is recognized by the <strong>tag_sub</strong> subscanner):</p>
+
+<blockquote><p>This is free ascii text  <strong>&lt;sequence&gt;&lt;of&gt;&lt;xml:like&gt;&lt;tags&gt;</strong></p></blockquote>
+
+<p>The first <code>&lt;</code> character is recognized as <strong>{ main_sub.tag_start }</strong>, it is pushed back to the input stream (<strong>-pushback</strong> property)
+and recognized again as the first character of <strong>{ tag_sub.tag }</strong></p><h3>Character sets</h3><a name="character-sets-section"></a><p>When you have to match only one character out of several characters, you need to define a character set. To define a character set, put the characters you want to match into square brackets:</p>
+
+<blockquote><p><strong>[AB]</strong> <em>matches</em> <code>A</code> or <code>B</code></p></blockquote>
+
+<h4>Metacharacters</h4>
+
+<p>The usual metacharacters are normal characters inside a character set, so they don&#39;t need to be escaped. The only metacharacters in character sets are:</p>
+
+<ul><li><code>[</code> <em>left square bracket</em> (begin of the character set)</li><li><code>]</code> <em>right square bracket</em> (end of the character set)</li><li><code>-</code> <em>hyphen</em> (range operator)</li></ul>
+
+<blockquote><p><strong>[A-D]</strong> <em>matches</em> <code>A</code> , <code>B</code> , <code>C</code> or <code>D</code> because the <code>-</code> (range operator) is not escaped</p><p><strong>[A-D]</strong> <em>matches</em> <code>A</code> , <code>-</code> or <code>D</code> because the <code>-</code> is escaped</p><p><strong>[[]]</strong> <em>matches</em> <code>[</code> or <code>]</code> because the brackets characters (into the character set) are escaped</p></blockquote>
+
+<h4>Whitespaces</h4>
+
+<p>In a character set, whitespaces are considered as normal characters:</p>
+
+<blockquote><p><strong>[ ]</strong> <em>matches</em> <code> </code> (whitespace)</p><p><strong>[A B]</strong> <em>matches</em> <code>A</code>, <code>B</code> or <code> </code> (whitespace)</p></blockquote>
+
+<h4>Ranges</h4>
+
+<p>An hyphen <code>-</code> between two characters defines a range of characters:</p>
+
+<blockquote><p><strong>[A-D]</strong> <em>matches</em> <code>A</code> , <code>B</code> , <code>C</code> or <code>D</code></p><p><strong>[0-9]</strong> <em>matches</em> all digits from <code>0</code> to <code>9</code></p><p><strong>[A-\u45]</strong> <em>matches</em> all uppercase letters from <code>A</code> to <code>E</code> (U+0045)</p><p><strong>[0-9]</strong> <em>matches</em> <code>0</code> or <code>9</code> (the <code>-</code> is escaped)</p></blockquote>
+
+<h4>Pre-defined character sets</h4>
+
+<h5>POSIX character classes</h5>
+
+<blockquote><p><code>[:alnum:]</code> <em>matches</em> all alphanumeric characters (equiv. <code>[a-zA-Z0-9]</code>)</p><p><code>[:alpha:]</code> <em>matches</em> all letters (equiv. <code>[a-zA-Z]</code>)</p><p><code>[:ascii:]</code> <em>matches</em> all ASCII characters (equiv. <code>[\u00-\u7F]</code>)</p><p><code>[:blank:]</code> <em>matches</em> Space and tab (equiv. <code>[ \t]</code>)</p><p><code>[:cntrl:]</code> <em>matches</em> all Control characters (equiv. <code>[\u00-\u1F\u7F]</code>)</p><p><code>[:digit:]</code> (<code>\d</code>) <em>matches</em> all Digits (equiv. <code>[0-9]</code>)</p><p><code>[:graph:]</code> <em>matches</em> all ASCII characters (equiv. <code>[\u00-\u7F]</code>)</p><p><code>[:lower:]</code> <em>matches</em> all Lowercase letters (equiv. <code>[a-z]</code>)</p><p><code>[:print:]</code> <em>matches</em> all Visible characters and spaces (anything but control characters) (equiv. <code>[\u20-\u7E]</code>)</p><p><code>[:punct:]</code> <em>matches</em> all Punctuation and symbols (equiv. <code>[!&quot;#$%&amp;&#39;()*+,\-./:;&lt;=&gt;?@\[\\\]^_`{|}~]</code>)</p><p><code>[:space:]</code> (<code>\s</code>) <em>matches</em> all whitespace characters, including line breaks (equiv. <code>[ \t\r\n\v\f]</code>)</p><p><code>[:upper:]</code> <em>matches</em> all Uppercase letters (equiv. <code>[A-Z]</code>)</p><p><code>[:word:]</code> (<code>\w</code>) <em>matches</em> all Word characters (letters, numbers and underscores) (equiv. <code>[a-zA-Z0-9_]</code>)</p><p><code>[:xdigit:]</code> <em>matches</em> all Hexadecimal digits (equiv. <code>[a-fA-F0-9]</code>)</p></blockquote>
+
+<h5>Unicode Scripts</h5>
+
+<p>You can refer to <a href="http://en.wikipedia.org/wiki/Script_(Unicode)">Unicode Scripts</a> using their name, with the following syntax:</p>
+
+<p><strong>\p{</strong>SCRIPT_NAME<strong>}</strong></p>
+
+<p>For example:</p>
+
+<blockquote><p><code>\p{Latin}</code> <em>matches</em> all the characters in the &quot;Latin&quot; Unicode Script</p></blockquote>
+
+<h5>Unicode Blocks</h5>
+
+<p>You can refer to <a href="http://en.wikipedia.org/wiki/Unicode_block">Unicode Blocks</a> using their name, with the following syntax:</p>
+
+<p><strong>\p{In</strong>SCRIPT_NAME<strong>}</strong></p>
+
+<p>For example:</p>
+
+<blockquote><p><code>\p{InCyrillic}</code> <em>matches</em> all the characters in the &quot;Cyrillic&quot; Unicode Block</p></blockquote>
+
+<h5>Unicode Categories</h5>
+
+<p>You can match characters that are part of a Unicode Category using the category name, with the following syntax:</p>
+
+<p><strong>\p{Is</strong>CATEGORY_NAME<strong>}</strong></p>
+
+<p>For example:</p>
+
+<blockquote><p><code>\p{InUppercase}</code> <em>matches</em> all the characters in the &quot;Uppercase&quot; Unicode Category</p></blockquote>
+
+<h4>Custom character classes</h4>
+
+<p>If you use the same character set more than one time, you can define it once and reference it multiple times with his name:</p><pre><code class="ptqsh ptqsh-scanner">// Define here your custom character sets
+// Syntax:   NAME [ ...character set definition... ]
+
+MyCharacterSet [#';]
+
+-- myScanner
+    MY_TERMINAL    / {MyCharacterSet} /     // <-- matches  "#", "'" or ";"
+    MY_TERMINAL_2  / {MyCharacterSet} A  /  // <-- matches  "#A", "'A" or ";A"
+
+</code></pre><p>then, you can refer to the character set in your patterns using the syntax <code>{CHARACTER_SET_NAME}</code></p><h3>Properties</h3><a name="properties-section"></a><p>Properties are settings applicable to the global scanner, the subscanners and the terminals to
+modify the scanner behavior.</p>
+
+<h4>Scanner properties</h4>
+
+<p><code>-eos-symbol &lt;name&gt;</code> defines a custom name for the &quot;end of stream&quot; symbol (default: <em>EOS</em>)</p>
+
+<p><code>-error-symbol &lt;name&gt;</code> defines a custom name for the &quot;error&quot; symbol (default: <em>ERROR</em>)</p>
+
+<p><code>-begin-symbol &lt;name&gt;</code> defines a custom name for the &quot;begin block&quot; symbol (default: <em>BEGIN</em>)</p>
+
+<p><code>-end-symbol &lt;name&gt;</code> defines a custom name for the &quot;end block&quot; symbol (default: <em>END</em>)</p>
+
+<h4>Sub-scanner properties</h4>
+
+<p><code>-fix-priority &lt;integer&gt;</code> The priority for every static-length terminal (e.g. keywords, operators, parentheses)</p>
+
+<p><code>-var-priority &lt;integer&gt;</code> The priority for every variable-length terminal (e.g. identifiers, literal numbers, literal strings)</p>
+
+<h4>Terminal properties</h4>
+
+<p><code>-ignore</code> Ignore this token when matched</p>
+
+<p><code>-goto &lt;subscanner name&gt;</code> Start using another subscanner after match</p>
+
+<p><code>-start &lt;subscanner name&gt;</code> Start using another subscanner after match. When a terminal with the <strong>-stop</strong> option is matched, the previous subscanner is restored</p>
+
+<p><code>-stop</code> Restores the previous subscanner after match</p>
+
+<p><code>-pushback</code> When <strong>-start</strong> or <strong>-goto</strong> are triggered, the current token string is pushed back into the input stream, so that the starting subscanner can read it again</p>
+
+<p><code>-priority &lt;integer&gt;</code> When two terminals can match the same word, you can give an higher (or lower) priority to one of them</p><pre><code class="ptqsh ptqsh-scanner">-- myScanner
+
+    WORD    / [a-z]+ /
+    FOR     / for  /
+
+</code></pre><p>Here, the word &quot;for&quot; can be matched by both the terminals. Setting an higher priority to FOR will resolve the conflict, matching FOR only when the word &quot;for&quot; is matched, and WORD in every other case:</p><pre><code class="ptqsh ptqsh-scanner">-- myScanner
+
+    WORD    / [a-z]+ /    -priority 5
+    FOR     / for  /      -priority 3
+</code></pre><p><code>-indent</code> In indentation-based scanners, use this property to indicate the &quot;indentation&quot; terminal, whose lenght determines the indentation level. This property is usually used together with the <strong>-ignore</strong> property. You should never put newline characters in an <strong>-indent</strong> terminal.</p><pre><code class="ptqsh ptqsh-scanner">-- myScanner
+
+    INDENT     /  [ \t]+  /   -indent -ignore
+    NEWLINE    /  \n   /
+
+
+
+</code></pre><h3>Grammars</h3><a name="grammars-section"></a><p>Ptq uses <strong>BNF (Backus-Naur Form)</strong> to define grammars, a very common notation for grammar specifications. This format is easy to understand and quick to learn.
+The BNF meta-symbols are:</p>
+
+<blockquote><p><code>::=</code> <strong>is defined as</strong>: separates the rule&#39;s head from his handle</p><p><code>|</code> <strong>or</strong>: pipe indicates alternative handles</p><p><code>&lt; non_terminal_name &gt;</code> <strong>non terminal symbol</strong>: angle brackets surround Non-terminal symbol names</p><p><code>terminal_name</code> <strong>terminal symbol</strong>: any name not surrounded by angle brackets is a Terminal symbol</p></blockquote>
+
+<p>A BNF specification is a set of derivation rules, written in the following form:</p>
+
+<p><img alt="Rule example" title="Rule example" src="/assets/images/rule.png"/></p>
+
+<p>Here is an example:</p><pre><code class="ptqsh ptqsh-bnf">< expression > ::= < expression_term >
+< expression > ::= < expression > plus < expression_term >
+< expression > ::= < expression > minus < expression_term >
+
+< expression_term > ::= integer
+< expression_term > ::= variable_name
+</code></pre><p>The above grammar can be written using the pipe <code>|</code> choice operator:</p><pre><code class="ptqsh ptqsh-bnf">< expression > ::= < expression_term >
+  |  < expression > plus < expression_term >
+  |  < expression > minus < expression_term >
+
+< expression_term > ::= integer | variable_name
+</code></pre><h4>Terminal and Non-terminal symbols</h4>
+
+<p>In BNF specification there are two kinds of symbols: <strong>Teminal</strong> and <strong>Non-terminal</strong> symbols.</p>
+
+<p>Terminal symbols represent the text recognized and tokenized by the scanner. In a parse tree, terminals are always leaves, and each of them represents a token. They are referenced in the grammar specification using their name (the identifier used in the scanner specification).</p>
+
+<p>Terminal symbols have to be defined in the scanner specification as non-ignored terminals (they must be defined at least in one subscanner without the -ignore property), using their identifier.</p>
+
+<p>Non-terminal symbols represent the rules used to derive the input text. In a parse tree, they are represented by non-terminal nodes. They are referenced using an identifier surrounded by angle brackets.</p>
+
+<p>Non-terminal symbols have to be defined as head symbol for at least one rule. They can be referenced using their identifier surrounded by angle brackets <code>&lt;&gt;</code>.</p><h3>Templates</h3><a name="templates-section"></a><p>Every symbol and every rule in the scanner/parser are identified by an index (32 bit integer).</p>
+
+<p>Usually, a developer has to write a set of constants/enumeration to easily identify specific rules and symbols in the code, but this can be a really tedious task because:</p>
+
+<ol><li>A scanner/parser can have dozens (or hundreds!) of rules/symbols</li><li>Indexes may vary if a scanner/parser is modified</li><li>It&#39;s boring</li></ol>
+
+<p>To makes things easier, PTQ provides a template processing tool that allows automatic generation of this kind of code.
+A template is a normal text file, coden in the targeted language, with some pre-processing tags. For example, the following template:</p><pre><code class="lang-template">public enum #project name#Symbols
+{
+    #foreach symbol#
+    S_#name# = #index# %%,%%
+    #end symbol#
+}
+
+</code></pre><p>Will result in a Java enum like the following:</p><pre><code class="lang-template">public enum MyProjectSymbols
+{ 
+    S__EOS_ = 0,
+    S__ERROR_ = 1,
+    S_MY_FIRST_SYMBOL = 2,
+    S_MY_SECOND_SYMBOL = 3,
+    S_MY_THIRD_SYMBOL = 4
+}
+
+</code></pre><h4>Tag list</h4>
+
+<h5>Global</h5>
+
+<p><code>#project name#</code> The project name</p>
+
+<p><code>#terminal count#</code> The number of terminal symbols</p>
+
+<p><code>#start symbol name#</code> The grammar start symbol name</p>
+
+<p><code>#start symbol index#</code> The grammar start symbol index</p>
+
+<p><code>#symbol count#</code> The total number of symbols ( terminal + non-terminal )</p>
+
+<p><code>#rule count#</code> The number of  rules in the grammar</p>
+
+<h5>List separator</h5>
+
+<p><code>%%</code> In every list you can surround a list separator between <strong>%%</strong> (e.g.  <code>%%,%%</code>). The separator will be omitted after the last occurrence in the list.</p>
+
+<h5>Terminal list</h5>
+
+<p><code>#for each terminal#</code> Starts the terminal symbol list. The code between this tag and <strong>#end terminal#</strong> will be repeated for each terminal symbol</p>
+
+<p><code>#name#</code> The terminal name (identifier)</p>
+
+<p><code>#index#</code> The terminal index</p>
+
+<p><code>#display name#</code> The terminal display name</p>
+
+<p><code>#end terminal#</code> Terminates the terminal symbol list</p>
+
+<h5>Symbol list</h5>
+
+<p><code>#for each symbol#</code> Starts the symbol list. The code between this tag and <strong>#end symbol#</strong> will be repeated for each symbol (terminal + non-terminal)</p>
+
+<p><code>#name#</code> The symbol name (identifier)</p>
+
+<p><code>#index#</code> The symbol index</p>
+
+<p><code>#end symbol#</code> Terminates the symbol list</p>
+
+<h5>Rule list</h5>
+
+<p><code>#for each rule#</code> Starts the rule list. The code between this tag and <strong>#end rule#</strong> will be repeated for each grammar rule</p>
+
+<p><code>#rule#</code> The grammar rule in BNF format (e.g.  <code>&lt;expr&gt; ::= LPAR &lt;expr&gt; RPAR</code> )</p>
+
+<p><code>#rule index#</code> The rule index</p>
+
+<p><code>#rule identifier#</code> A unique rule identifier, built using symbols name (e.g. <code>expr_LPAR_expr_RPAR</code>), can be used to have an index-independent identifier for the rule</p>
+
+<p><code>#rule md5#</code> The MD5 digest string of the rule, can be used to have an index-independent identifier for the rule</p>
+
+<p><code>#head name#</code> The name of the head symbol (LHS)</p>
+
+<p><code>#head index#</code> The index of the head symbol (LHS)</p>
+
+<p><code>#element count#</code> The number of symbols in the rule&#39;s tail (RHS)</p>
+
+<p><code>#for each element#</code> Starts the rule tail list. The code between this tag and <strong>#end element#</strong> will be repeated for each symbol in the rule tail (RHS)</p>
+
+<p><code>#name#</code> The RHS symbol name</p>
+
+<p><code>#index#</code> The RHS symbol index</p>
+
+<p><code>#end element#</code> Terminates the rule tail list</p>
+
+<p><code>#end rule#</code> Terminates the rule list</p>
+
+<h5>Non-terminal list</h5>
+
+<p><code>#for each nonterminal#</code> Starts the non-terminal symbol list. The code between this tag and <strong>#end nonterminal#</strong> will be repeated for each non-terminal symbol</p>
+
+<p><code>#name#</code> The non-terminal symbol name (identifier)</p>
+
+<p><code>#index#</code> The non-terminal symbol index</p>
+
+<p><code>#for each rule#</code> Starts the rule list. The code between this tag and <strong>#end rule#</strong> will be repeated for each grammar rule with the current non-terminal symbol as his head (LHS)</p>
+
+<p><em>... see rule tags ...</em></p>
+
+<p><code>#end rule#</code> Terminates the rule list</p>
+
+<p><code>#end nonterminal#</code> Terminates the non-terminal symbol list</p></div></div></div></div><div id="footer-wrapper"><footer id="footer" class="container"><div class="row"><div class="3u 6u(medium) 12u$(small)"><section class="widget contact"><h3>Author</h3><a href="http://alessioscalici.it" title="Website">Alessio Scalici</a><ul class="style2"><li><a href="https://alessioscalici.github.io" title="GitHub page" class="icon fa-github"><span class="label">GitHub page</span></a></li><li><a href="https://ie.linkedin.com/in/alessioscalici" title="LinkedIn profile" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>ptq-js</h3><ul class="style2"><li>Fast</li><li>Reliable</li><li>Easy to learn</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Applications</h3><ul class="style2"><li>Language analysis</li><li>Syntax highlighting</li><li>Complex validation</li></ul></section></div><div class="3u 6u(medium) 12u$(small)"><section class="widget links"><h3>Ptq resources</h3><ul class="style2"><li><a href="http://alessioscalici.it/ptq" title="Ptq">Homepage</a></li><li><a href="http://alessioscalici.it/ptq/reference.html" title="Ptq docs">Docs</a></li><li><a href="assets/apps/ptq.jar" title="Ptq download">Download Ptq 2.0.1</a></li></ul></section></div></div><div class="row"><div class="12u"><div id="copyright"><ul class="menu"><li>&copy; Alessio Scalici. All rights reserved</li></ul></div></div></div></footer></div></div><script src="assets/js/jquery.min.js"></script><script src="assets/js/jquery.dropotron.min.js"></script><script src="assets/js/skel.min.js"></script><script src="assets/js/util.js"></script><!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]--><script src="assets/js/main.js"></script><script src="assets/js/prism.js"></script><script src="assets/js/jquery.qtip.min.js"></script><script src="assets/js/ptq/ptq.js"></script><script src="assets/js/ptq-sh.js"></script></body></html>
